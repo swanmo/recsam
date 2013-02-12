@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-
+function RecipeCtrl() {}
 
 function MyCtrl1() {}
 MyCtrl1.$inject = [];
