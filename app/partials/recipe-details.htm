@@ -1,0 +1,45 @@
+
+<div id="wrap">
+
+	<!-- - - - - - - - - - - - - -  Begin page content - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span8">
+				<h2>{{recipe.name}}</h2>
+			</div>
+			<div class="span4" style="padding-top:1em">
+
+				<a class="btn btn-primary" href="#/edit-recipe/{{recipe.id}}" style="float:right">Ändra</a>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span4">
+				<p><strong>Ingredienser</strong></p>
+				<div id="ingredientsDiv" class="well" style="max-width: 400px; margin: 0 auto .2em" ng-bind-html-unsafe="recipe.ingredients">
+					<!-- <a id="ingredientsShoppingIcon" style="float:right;position:relative;top:-12px;left:11px" href="#" onclick="$('#ingredientsDiv').attr('contentEditable',true).css('background-color','white');"><i class="icon-shopping-cart"></i></a> -->
+					
+				</div>
+			</div>
+
+			<div class="span8">
+				<p><strong>Portioner:</strong> {{recipe.servingNo}}</p>
+				<p><strong>Tillagningstid:</strong> {{recipe.cookingMinutes}}</p>
+				<p><strong>Källa:</strong> <span page-url-as-html page-url="recipe.pageUrl"></span>
+				<p><strong>Beskrivning</strong></p>
+				<div id="ingredientsDiv" class="well" style=" max-width: 720px; margin: 0 auto .2em" ng-bind-html-unsafe="recipe.description"></div>
+			</div>
+
+		</div>
+
+		<div id="push"></div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+$('#ingredientsShoppingIcon').tooltip(
+	{title:'Lägg ingredienser till shopping-lista', placement:'bottom', trigger:'hover'})
+
+</script>  
+
+

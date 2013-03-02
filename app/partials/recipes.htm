@@ -1,1 +1,51 @@
-<p>recipes.htm</p>
+<div id="wrap">
+
+  <!-- Begin page content -->
+  <div class="container">
+
+    <div class="hero-unit">
+      <h1>Välkommen</h1>
+      <p>
+        <span ng-hide="query.length">Du har {{numberOfRecipes}} recept</span>
+        <span ng-show="query.length">Din sökning gav {{(recipes|filter:query).length}} resultat</span>
+      </p>
+      <div class="input-append">
+        <input class="span2" id="appendedInputButton" type="text" id="queryField" ng-model="query">
+
+        <button class="btn" type="button">Sök</button>
+      </div>
+
+      <p>
+        <br>
+        <a class="btn btn-primary btn-large">
+          Skapa fler recept
+        </a>
+        <a class="btn btn-large">
+          Skapa en matsedel
+        </a>
+      </p>
+    </div>
+
+    <h1>recept-lista</h1>
+    <div class="recipes">
+      <div ng-repeat="rec in recipes | filter:query" class="thumbnail recipe-list-container">
+        <a href="#/recipes/{{rec.id}}">{{rec.name}}</a>
+
+        <p style="cursor:pointer" onclick="window.location='#/recipes/{{rec.id}}'">{{rec.cookingMinutes}} min tillagningstid<span style="color:#999">, {{rec.ingredientsList.length}} ingredienser</span></p>
+
+
+        <div class="row-fluid">
+          <div class="row-fluid">
+            <div class="span10">
+              <span star-as-html rating="rec.rating"></span>
+            </div>
+            <div class="span2" style="text-align:right"><img src="img/glyphicons_202_shopping_cart.png" style="display:inline-block"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>
+<!--script type="text/javascript">
+  setInterval(function(){alert("före " + $('.recipe-list-container').length);},500);
+</script -->

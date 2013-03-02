@@ -3,43 +3,58 @@
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
 describe('my app', function() {
+// describe('PhoneCat App', function() {
+ 
+//   describe('Phone list view', function() {
+ 
+//     beforeEach(function() {
+//       browser().navigateTo('../../app/index.html');
+//     });
+ 
+ 
+//     it('should filter the phone list as user types into the search box', function() {
+//       expect(repeater('.phones li').count()).toBe(3);
+ 
+//       input('query').enter('nexus');
+//       expect(repeater('.phones li').count()).toBe(1);
+ 
+//       input('query').enter('motorola');
+//       expect(repeater('.phones li').count()).toBe(2);
+//     });
+//   });
+// });
 
   beforeEach(function() {
+    // browser().navigateTo('/');
     browser().navigateTo('../../app/index.html');
+    expect(browser().location().url()).toBe('/recipes');
   });
 
 
-  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-    expect(browser().location().url()).toBe("/view1");
+  it('should automatically redirect to /recipes when location hash/fragment is empty', function() {
+    expect(browser().location().url()).toBe("/recipes");
   });
 
 
-  describe('view1', function() {
+  describe('recipe', function() {
 
     beforeEach(function() {
-      browser().navigateTo('#/view1');
+      browser().navigateTo('/dev12repopulate');
+      browser().navigateTo('../../app/index.html#/recipes');
+      sleep(1);
+    });
+//       expect(repeater('.phones li').count()).toBe(1);
+
+    it('should render ten recipes without filtering', function() {
+      expect(repeater('.recipe-list-container').count()).toBe(10);
     });
 
-
-    it('should render view1 when user navigates to /view1', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 1/);
-    });
-
-  });
-
-
-  describe('view2', function() {
-
-    beforeEach(function() {
-      browser().navigateTo('#/view2');
-    });
-
-
-    it('should render view2 when user navigates to /view2', function() {
-      expect(element('[ng-view] p:first').text()).
-        toMatch(/partial for view 2/);
+    it('should filter when searching (case insensitive)', function() {
+      input("query").enter("mango");
+      sleep(1);
+      expect(repeater('.recipe-list-container').count()).toBe(1);
     });
 
   });
+
 });

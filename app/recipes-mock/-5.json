@@ -1,0 +1,21 @@
+{
+"id":-5,
+"name":"Mango chutney-kyckling",
+"pageUrl":"http://",
+"description":"En gammal favorit",
+"servingNo":2,
+"excludeFromMenus":false,
+"ingredientList":[
+	{"id":0,"name":"1 dl mango chutney"},
+	{"id":-1,"name":"2-4 kycklingfiléer"},
+	{"id":-2,"name":"3 dl matlagningsgrädde"},
+	{"id":-3,"name":"2 klyftor vitlök"},
+	{"id":-4,"name":"ev lite riven ingefära"},
+	{"id":-5,"name":"1 msk idealmjöl"},
+	{"id":-6,"name":"salt och peppar"}
+],
+"recipeDescriptionList":[
+	{"id":0,"description":"kyckling"},
+	{"id":-1,"description":"less-than-30-min"}
+]
+}

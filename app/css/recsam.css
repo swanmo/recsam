@@ -1,0 +1,14 @@
+div.recipe-list-container {
+  background: #eee;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+div.recipe-list-container a {
+  text-decoration: none;
+  color: #333;
+  font-size: 2em;
+  font-weight: bold;
+}
+div.recipe-list-container a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,11 @@
+{
+"id":-2,
+"name":"Pangkaka",
+"pageUrl":"http://",
+"description":"whatever",
+"servingNo":2,
+"excludeFromMenus":false,
+"ingredientList":[],
+"recipeDescriptionList":[
+{"id":-4,"description":"vegetarisk"}
+]}

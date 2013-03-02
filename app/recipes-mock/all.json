@@ -1,0 +1,53 @@
+[
+{
+"id":-5,
+"name":"Mango chutney-kyckling",
+"pageUrl":"http://",
+"description":"En gammal favorit",
+"servingNo":2,
+"excludeFromMenus":false,
+"ingredientList":[
+	{"id":0,"name":"1 dl mango chutney"},
+	{"id":-1,"name":"2-4 kycklingfiléer"},
+	{"id":-2,"name":"3 dl matlagningsgrädde"},
+	{"id":-3,"name":"2 klyftor vitlök"},
+	{"id":-4,"name":"ev lite riven ingefära"},
+	{"id":-5,"name":"1 msk idealmjöl"},
+	{"id":-6,"name":"salt och peppar"}
+],
+"recipeDescriptionList":[
+	{"id":0,"description":"kyckling"},
+	{"id":-1,"description":"less-than-30-min"}
+]
+},
+{
+"id":-1,
+"name":"Pannkaka",
+"pageUrl":"http://",
+"description":"En gammal klassiker",
+"servingNo":2,
+"excludeFromMenus":true,
+"ingredientList":[
+	{"id":-7,"name":"6 dl mjölk"},
+	{"id":-8,"name":"3 dl mjöl"},
+	{"id":-9,"name":"2-3 ägg"},
+	{"id":-10,"name":"lite fett"},
+	{"id":-11,"name":"salt"},
+	{"id":-12,"name":"vispgrädde och sylt"}
+],
+"recipeDescriptionList":[
+	{"id":-2,"description":"vegetarisk"},
+	{"id":-3,"description":"less-than-15-min"}
+]
+},
+{
+"id":-2,
+"name":"Pangkaka",
+"pageUrl":"http://",
+"description":"whatever",
+"servingNo":2,
+"excludeFromMenus":false,
+"ingredientList":[],
+"recipeDescriptionList":[
+{"id":-4,"description":"vegetarisk"}
+]}]
