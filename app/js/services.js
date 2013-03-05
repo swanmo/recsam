@@ -20,6 +20,58 @@ recsamApp.value('localStorage', window.localStorage);
 
 var lsKey = 'recsam';
 
+
+function message(severity, messageString) {
+    var messageIcon = 'glyphicons_245_chat';
+    var messageClass;
+    switch (severity) {
+        case "ok":
+            messageIcon = 'img/glyphicons_206_ok_2.png';
+            messageClass = 'alert alert-info';
+            break;
+        case "warning":
+            messageIcon = 'img/glyphicons_205_electricity.png';
+            messageClass = 'alert';
+            break;
+        case "error":
+            messageIcon = 'img/glyphicons_207_remove_2.png';
+            messageClass = 'alert';
+            break;
+        default:
+            messageIcon = 'img/glyphicons_245_chat.png';
+            messageClass = 'alert';
+            break;
+    }
+    return {icon:messageIcon, css:messageClass, message:messageString};
+}
+
+recsamApp.factory('MessageUtil', function(){
+    return {
+        getMessage: function(severity, messageString) {
+            var messageIcon;
+            var messageClass;
+            switch (severity) {
+                case "ok":
+                    messageIcon = 'img/glyphicons_206_ok_2.png';
+                    messageClass = 'alert alert-info';
+                    break;
+                case "warning":
+                    messageIcon = 'img/glyphicons_205_electricity.png';
+                    messageClass = 'alert';
+                    break;
+                case "error":
+                    messageIcon = 'img/glyphicons_207_remove_2.png';
+                    messageClass = 'alert';
+                    break;
+                default:
+                    messageIcon = 'img/glyphicons_245_chat.png';
+                    messageClass = 'alert';
+                    break;
+            }
+            return {icon:messageIcon, css:messageClass, message:messageString};
+    }
+}});
+
 recsamApp.factory('Recipes', function(localStorage){
     return {
         dummy:function() {
@@ -78,22 +130,42 @@ recsamApp.factory('Recipes', function(localStorage){
                 return null;
             }
         },
-        createId:function(now) {
-
-            return "rec_" + 
-                now.getFullYear() +
-                now.getMonth() +
-                now.getDate() + 
-                "_" +
-                now.getHours() +
-                now.getMinutes() +
-                "_" +
-                now.getMilliseconds();
+        approvedChars: 'abcdefghiljklmnopqrstuvxyz1234567890-()',
+        getApprovedAlias: function(recipeName) {
+            var approvedAlias = '';
+            if (!recipeName)
+                return approvedAlias;
+            for ( var i = 0; i < recipeName.length; i++ ) {
+                var letter = recipeName.charAt(i).toLowerCase();
+                if (letter == ' ' ) {
+                    approvedAlias += '-';
+                } else if (this.approvedChars.indexOf(letter) >=0 ) {
+                    approvedAlias += letter;
+                }
+            }
+            if (approvedAlias.length > 25) {
+                approvedAlias = approvedAlias.substring(0, 25);
+            }
+            return approvedAlias;
+        },
+        getId: function() {
+            var now = new Date();
+            return '' + now.getFullYear() +
+                now.getMonth() + '' +
+                now.getDate() + '' +
+                now.getMilliseconds() + Math.floor((Math.random()*100)+1);;
+        },
+        appendId:function(recipe) {
+            recipe.id = this.getId();
+        },
+        appendAlias:function(recipe) {
+            recipe.alias = this.getApprovedAlias(recipe.name);
         },
         store:function(recipe) {
             var now = new Date();
-            recipe.id = this.createId(now);
             recipe.createDate = now.getTime();
+            this.appendId(recipe);
+            this.appendAlias(recipe);
             var recipes = this.allRecipes();
             recipes.push(recipe);
             this.setAllRecipes(recipes);

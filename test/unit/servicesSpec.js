@@ -56,9 +56,9 @@ describe('Recipe service', function() {
       expect(recipeService.allRecipes().length).toBe(1);
     });
 
-    it('createId should return a string with format: rec_20120222_1735_123', function() {
+    /*it('createId should return a string with format: rec_20120222_1735_123', function() {
       expect(recipeService.createId(new Date()).length > 16).toBe(true);
-    });
+    });*/
 
     it('store should add another recipe to localStorage', function() {
       expect(recipeService.allRecipes().length).toBe(2);
@@ -66,6 +66,31 @@ describe('Recipe service', function() {
       
       recipeService.store(jsonString);
       expect(recipeService.allRecipes().length).toBe(3);
+    });
+
+    it('getApprovedAlias should replace space with dash and make lower case', function() {
+      var approvedAlias = recipeService.getApprovedAlias('test Lo Lo');
+      expect(approvedAlias).toEqual('test-lo-lo');
+    });
+    
+    it('getApprovedAlias should limit length to 25 chars', function() {
+      var approvedAlias = recipeService.getApprovedAlias('1234567890 abcdefghij ABCDEFGHIJKL');
+      expect(approvedAlias).toEqual('1234567890-abcdefghij-abc');
+    });
+
+    it('getApprovedAlias should ignore åäö', function() {
+      var approvedAlias = recipeService.getApprovedAlias('test lä lå');
+      expect(approvedAlias).toEqual('test-l-l');
+    });
+
+    it('getApprovedAlias should return empty string if only illegal chars', function() {
+      var approvedAlias = recipeService.getApprovedAlias('å$∞@');
+      expect(approvedAlias).toEqual('');
+    });
+
+    it('getApprovedAlias should accept null', function() {
+      var approvedAlias = recipeService.getApprovedAlias(null);
+      expect(approvedAlias).toEqual('');
     });
 
 });
@@ -99,6 +124,49 @@ describe('RecipeUtils service', function() {
 
 });
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+MessageUtil
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+describe('MessageUtil service', function() {
+  var messageUtilService;
+  beforeEach(module('recsamApp'));
+
+  beforeEach(function() {
+      inject(function($injector) {
+        messageUtilService = $injector.get('MessageUtil');
+      });
+    });
+
+    it('MessageUtil should create object for severit ok', function() {
+      var results = messageUtilService.getMessage('ok', 'Alright');
+
+      expect(results.icon).toEqual('img/glyphicons_206_ok_2.png');
+      expect(results.message).toEqual('Alright');
+      expect(results.css).toEqual('alert alert-info');
+    });
+
+  it('MessageUtil should create object for severity error', function() {
+      var results = messageUtilService.getMessage('error', 'An error message');
+
+      expect(results.icon).toEqual('img/glyphicons_207_remove_2.png');
+      expect(results.message).toEqual('An error message');
+      expect(results.css).toEqual('alert');
+    });
+
+  it('MessageUtil should create object for severity warning', function() {
+      var results = messageUtilService.getMessage('warning', 'A warning message');
+
+      expect(results.icon).toEqual('img/glyphicons_205_electricity.png');
+      expect(results.css).toEqual('alert');
+    });
+
+it('MessageUtil should create object for severity other', function() {
+      var results = messageUtilService.getMessage('any-other-severity', 'A message');
+
+      expect(results.icon).toEqual('img/glyphicons_245_chat.png');
+      expect(results.css).toEqual('alert');
+    });
+});
 
 
 
