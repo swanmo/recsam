@@ -29,7 +29,7 @@
     <h1>recept-lista</h1>
     <div class="recipes">
       <div ng-repeat="rec in recipes | filter:query" class="thumbnail recipe-list-container">
-        <a href="#/recipes/{{rec.id}}">{{rec.name}}</a>
+        <a href="#/recipes/{{rec.id}}/{{rec.alias}}">{{rec.name}}</a>
 
         <p style="cursor:pointer" onclick="window.location='#/recipes/{{rec.id}}'">{{rec.cookingMinutes}} min tillagningstid<span style="color:#999">, {{rec.ingredientsList.length}} ingredienser</span></p>
 

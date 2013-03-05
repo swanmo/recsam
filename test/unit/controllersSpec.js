@@ -28,30 +28,53 @@ describe('RecipeCtrl', function(){
 });
 
 
-describe('RecipeDevCtrl', function(){
-  var recipeDevCtrl, scope, recipeMockService;
+describe('RecipeCreationCtrl with empty recipe query results', function(){
+  var recipeCreationCtrl, scope, queryResults = [];
 
   beforeEach(module('recsamApp')) ;
 
-
   beforeEach(module(function($provide) {
-    recipeMockService = {
-      deletedArr:[],
-      query: function () { return [{"id":"2  ","name":"kalle"},{"id":"33","name":"valle"},{"id":"444","name":"tjalle"}]; },
-      delete: function(recipeId) {deletedArr.push(recipeId);}
+    var recipeService = {
+      query: function () { return queryResults; }
       
     };
-    $provide.value('Recipes', recipeMockService);
+    $provide.value('Recipes', recipeService);
   }));
 
   beforeEach(inject(function($rootScope, $controller) {
     scope = $rootScope.$new();
 
-    recipeDevCtrl = $controller('RecipeDevCtrl', {$scope: scope});
+    recipeCreationCtrl = $controller('RecipeCreationCtrl', {$scope: scope});
   }));
 
-  /*it('should delete all recipes', function() {
-    recipeDevCtrl.clearAll();
-    expect(recipeMockService.deletedArr.length).toBe(3);
-  });*/
+  it('should have template when theres no recipes in localStorate (i.e. Recipes.query returns empty array)', function() {
+    queryResults = [];
+    expect(scope.template.first).toBe('partials/template-first.htm');
+  });
+});
+
+
+describe('RecipeCreationCtrl with non-null recipe query results', function(){
+  var recipeCreationCtrl, scope, queryResults = [{'name':'kalle'},{'name':'valle'}];
+
+  beforeEach(module('recsamApp')) ;
+
+  beforeEach(module(function($provide) {
+    var recipeService = {
+      query: function () { return queryResults; }
+      
+    };
+    $provide.value('Recipes', recipeService);
+  }));
+
+  beforeEach(inject(function($rootScope, $controller) {
+    scope = $rootScope.$new();
+
+    recipeCreationCtrl = $controller('RecipeCreationCtrl', {$scope: scope});
+  }));
+
+  it('should have template when theres no recipes in localStorate (i.e. Recipes.query returns empty array)', function() {
+    queryResults = [];
+    expect(scope.template.first).toBeNull();
+  });
 });

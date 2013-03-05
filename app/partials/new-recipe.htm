@@ -1,60 +1,55 @@
 <div class="container">
-    
-	<div class="alert alert-info">
-	  <button type="button" class="close" data-dismiss="alert">&times;</button>
-	  <h1>Välkommen</h1>
-	  <p>Det verkar vara första gången du skapar ett recept. Det finns två sätt att skapa ett recept.
-	      <ol>
-	        <li>Ange en adress till en webbsida med ett recept du vill ha med i samlingen så hämtas det om möjligt till din receptsamling. Tryck <button class="btn btn-mini" type="button">Skapa från webbsida</button></li>
-	        <li>Använd sidan nedan för att mata in ingredienser och detaljer kring tilllagningen.</li>
-	      </ol>
-	  </p>
-	</div>
+    <div ng-include src="template.first"></div>
+    <div ng-include  src="'partials/template-message.htm'"></div>
 
-	<fieldset>
-	  <legend style="width:100%"><div style="width:100%">Nytt recept 
+    <form id="recipeFrm">
+		<fieldset>
+		  <legend style="width:100%"><div style="width:100%">Nytt recept 
 
-	  	<button style="float:right;margin-left:.3em" type="submit" class="btn btn-primary" ng-click="save(recipe)">Spara</button>
+		  	<button style="float:right;margin-left:.3em" type="submit" class="btn btn-primary" ng-click="save(recipe)">Spara</button>
 
-	    <a style="float:right;margin-left:.3em" href="#createFromUrlDlg" role="button" class="btn" data-toggle="modal">Skapa från webbsida</a>
-	    </div></legend>
-	  
-	  <div class="row-fluid">
-	    <div class="span12">
-	      <label>Namn på recept</label>
-	      <input type="text" class="input-xxlarge" ng-model="recipe.name">
-	    </div>
-	  </div>
-	  <div class="row-fluid">
-	    
-	    <div class="span4">
-	      <label>Ingredienser</label>
-	      <textarea rows="20"  ng-model="recipe.ingredients"></textarea>
-	    </div>
+		    <a style="float:right;margin-left:.3em" href="#createFromUrlDlg" role="button" class="btn" data-toggle="modal">Skapa från webbsida</a>
+		    </div></legend>
+		  
+		  <div class="row-fluid">
+		    <div class="span12">
+		      <label>Namn på recept</label>
+		      <input type="text" name="name" class="input-xxlarge" ng-model="recipe.name" required>
+		      <span class="error" ng-show="recipeFrm.name.$error.required">
+	          Required!</span>
+		    </div>
+		  </div>
+		  <div class="row-fluid">
+		    
+		    <div class="span4">
+		      <label>Ingredienser</label>
+		      <textarea rows="20"  ng-model="recipe.ingredients"></textarea>
+		    </div>
 
 
-	    <div class="span8">
+		    <div class="span8">
 
-	      <label for="appendedInput-1">Portioner</label>
-	      <div class="input-append">
-	        <input class="span2" id="appendedInput-1" type="text" placeholder="Antal" ng-model="recipe.servingNo" size="36">
-	        <span class="add-on">portioner</span>
-	      </div>
+		      <label for="appendedInput-1">Portioner</label>
+		      <div class="input-append">
+		        <input class="span2" id="appendedInput-1" type="text" placeholder="Antal" ng-model="recipe.servingNo" size="36">
+		        <span class="add-on">portioner</span>
+		      </div>
 
-	      <label for="appendedInput-2">Tillagningstid</label>
-	      <div class="input-append">
-	        <input class="span2" id="appendedInput-2" type="text" placeholder="Antal" ng-model="recipe.cookingMinutes" size="36">
-	        <span class="add-on">minuter</span>
-	      </div>
-	      
-	      <label for="recipeSource">Källa</label>
-	      <input id="recipeSource" type="text" value="Eget recept" class="input-xlarge" ng-model="recipe.pageUrl">
+		      <label for="appendedInput-2">Tillagningstid</label>
+		      <div class="input-append">
+		        <input class="span2" id="appendedInput-2" type="text" placeholder="Antal" ng-model="recipe.cookingMinutes" size="36">
+		        <span class="add-on">minuter</span>
+		      </div>
+		      
+		      <label for="recipeSource">Källa</label>
+		      <input id="recipeSource" type="text" value="Eget recept" class="input-xlarge" ng-model="recipe.pageUrl">
 
-	      <label>Beskrivning</label>
-	      <textarea rows="11" style="width:100%"  ng-model="recipe.description"></textarea>
-	    </div>
-	  </div>
-	</fieldset>
+		      <label>Beskrivning</label>
+		      <textarea rows="11" style="width:100%"  ng-model="recipe.description"></textarea>
+		    </div>
+		  </div>
+		</fieldset>
+	</form>
 </div>
 
 <div id="push"></div>

@@ -2,14 +2,15 @@
 
 /* Controllers */
 function RecipeCtrl($scope, Recipes) {
-console.log("loading...");
-  $scope.recipes = Recipes.query();
+	console.log("loading...");
+  	$scope.recipes = Recipes.query();
 
-  $scope.numberOfRecipes = $scope.recipes.length;
+	$scope.numberOfRecipes = $scope.recipes.length;
 
-  $scope.numberOfHits = function() {
-	return $filter("query").length;
-  }
+	$scope.numberOfHits = function() {
+		return $filter("query").length;
+	}
+	console.log("loading complete");
 }
 
 function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils) {
@@ -17,23 +18,36 @@ function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils) {
   RecipeUtils.ingredientsAsHtml($scope.recipe);
 }
 
-function RecipeCreationCtrl($scope, $routeParams, Recipes, localStorage) {
+function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localStorage) {
 	$scope.master= {};
+	$scope.messge = null;
+	var firstTemplate = null;
+	if (Recipes.query().length == 0) {
+		firstTemplate = 'partials/template-first.htm';
+	}
+	$scope.template = { first: firstTemplate};
 
 	$scope.save = function(recipe) {
-		recipe.saved=false;
-		recipe.ingredientsList = "";recipe.ingredients ? recipe.ingredients.split('\n') : '';
-		alert("Save, ingredientsList: " + ingredientsList);
-		alert("Save, stringified: " + JSON.stringify(ingredientsList));
 
+		recipe.saved=false;
+		recipe.ingredientsList = recipe.ingredients ? recipe.ingredients.split('\n') : '';
 	    $scope.master = angular.copy(recipe);
 
 		Recipes.store($scope.master);
-	  };
+		$scope.message = MessageUtil.getMessage('ok', 'Recept skapat!');
+	};
 }
 
 function RecipeEditCtrl($scope, $routeParams, Recipes) {
+	$scope.messge = null;
 	$scope.recipe = Recipes.get($routeParams.recipeId);
+
+	$scope.save = function(recipe) {
+		recipe.ingredientsList = recipe.ingredients ? recipe.ingredients.split('\n') : '';
+
+		Recipes.store($scope.master);
+		$scope.message = MessageUtil.getMessage('ok', 'Recept skapat!');
+	};
 }
 
 
