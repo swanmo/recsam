@@ -28,9 +28,7 @@ function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localSto
 	$scope.template = { first: firstTemplate};
 
 	$scope.save = function(recipe) {
-
 		recipe.saved=false;
-		recipe.ingredientsList = recipe.ingredients ? recipe.ingredients.split('\n') : '';
 	    $scope.master = angular.copy(recipe);
 
 		Recipes.store($scope.master);
@@ -38,18 +36,16 @@ function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localSto
 	};
 }
 
-function RecipeEditCtrl($scope, $routeParams, Recipes) {
-	$scope.messge = null;
+function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes) {
+	$scope.message = null;
 	$scope.recipe = Recipes.get($routeParams.recipeId);
 
 	$scope.save = function(recipe) {
-		recipe.ingredientsList = recipe.ingredients ? recipe.ingredients.split('\n') : '';
-
-		Recipes.store($scope.master);
-		$scope.message = MessageUtil.getMessage('ok', 'Recept skapat!');
+		Recipes.update(recipe);
+		$scope.recipe = angular.copy(recipe);
+		$scope.message = MessageUtil.getMessage('ok', 'Recept sparat!');
 	};
 }
-
 
 /*
 Controller for adding/removing recipes automatically, eg from e2e test.

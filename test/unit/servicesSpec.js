@@ -2,6 +2,15 @@
 
 /* jasmine specs for services go here */
 
+function getElemByName(arrWithName, nameToFind) {
+    for (var pos in arrWithName) {
+        if (arrWithName[pos].name == nameToFind) {
+            return arrWithName[pos];
+        }
+    }
+    return null;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 Recipe
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -11,7 +20,7 @@ describe('Recipe service', function() {
 
 	beforeEach(function() {
 	  localStorage = {
-      recsam: '[{"id":"rec_20120222_1735_123", "name":"Pangkaka"}, {"id":"rec_20120222_0202_101", "name":"Estrella-burgare"}]'
+      recsam: '[{"id":"rec_20120222_1735_123", "name":"Pangkaka", "ingredientsList":["6 dl mjölk", "3 dl vetemjöl", "salt"]}, {"id":"rec_20120222_0202_101", "name":"Estrella-burgare", "ingredientsList":["400 g nötfärs", "salt och peppar", "chili"]}]'
   	};
 	 
 	  module(function($provide) {
@@ -62,10 +71,39 @@ describe('Recipe service', function() {
 
     it('store should add another recipe to localStorage', function() {
       expect(recipeService.allRecipes().length).toBe(2);
-      var jsonString = {"id":"rec_20120222_1735_123", "name":"Pangkaka"};
+      var jsonString = {"id":null, "name":"Test-recept","ingredients":"1 dl vatten\n1 krm salt"};
       
       recipeService.store(jsonString);
       expect(recipeService.allRecipes().length).toBe(3);
+      var elem = getElemByName(eval(localStorage.recsam),"Test-recept");
+      expect(elem.id).not.toBeNull();
+      expect(elem.id).not.toBeUndefined();
+      expect(elem.ingredientsList.length).toBe(2);
+    });
+
+    it('update should update recipe in localStorage', function() {
+      expect(recipeService.allRecipes().length).toBe(2);
+      var jsonString = {"id":"rec_20120222_1735_123", "name":"Nytt namn","ingredients":"1 dl vatten\n1 krm salt"};
+      
+      recipeService.update(jsonString);
+      expect(recipeService.allRecipes().length).toBe(2);
+      var elem = getElemByName(eval(localStorage.recsam),"Nytt namn");
+      expect(elem.id).not.toBeNull();
+      expect(elem.id).not.toBeUndefined();
+      expect(elem.ingredientsList.length).toBe(2);
+      expect(elem.alias).toBe('nytt-namn');
+    });
+
+    it('update should throw exception if id doesnt exist in localStorage', function() {
+      expect(recipeService.allRecipes().length).toBe(2);
+      var jsonString = {"id":"non-existing-id", "name":"Nytt namn","ingredients":"1 dl vatten\n1 krm salt"};
+      var exceptionThrown = false;
+      try {
+        recipeService.update(jsonString);
+      } catch (err) {
+        exceptionThrown = true;
+      }
+      expect(exceptionThrown).toBeTruthy();
     });
 
     it('getApprovedAlias should replace space with dash and make lower case', function() {

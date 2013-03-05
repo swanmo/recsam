@@ -140,9 +140,22 @@ recsamApp.factory('Recipes', function(localStorage){
             recipe.createDate = now.getTime();
             this.appendId(recipe);
             this.appendAlias(recipe);
+            recipe.ingredientsList = recipe.ingredients ? recipe.ingredients.split('\n') : [];
             var recipes = this.allRecipes();
             recipes.push(recipe);
             this.setAllRecipes(recipes);
+        },
+        update:function(recipe) {
+            this.appendAlias(recipe);
+
+            var posOfRecipe = this.positionOfRecipe(recipe.id);
+            if (!posOfRecipe) {
+                throw "RecipeId does not exist in local storage";
+            }
+            recipe.ingredientsList = recipe.ingredients ? recipe.ingredients.split('\n') : [];
+            var allRecipes = this.allRecipes();
+            allRecipes[posOfRecipe] = recipe;
+            this.setAllRecipes(allRecipes);
         }
     }
     
@@ -184,7 +197,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     pageUrl:'www.arla.se',
                     description:'Blanda ingredienserna och rör tills smeten är klumpfri. Låt helst smeten vila 1 timme.\nStek i flytande margarin.',
                     rating:'3',
-                    ingredientsList:['6 dl mjölk', '3 dl vetemjöl', '2 ägg', '1 krm salt', 'grädde och sylt'],
+                    ingredients:'6 dl mjölk\n3 dl vetemjöl\n2 ägg\n1 krm salt\ngrädde och sylt',
                     tags:['enkelt']
                 }
             );
@@ -198,7 +211,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     pageUrl:'www.husqvarna.se',
                     description:'Bred smör på macka. Lägg på räkor och majonnäs. Toppa med ett salladsblad.',
                     rating:'2',
-                    ingredientsList:['1 dl skalade räkor', '1 st tekaka', 'majonnäs', 'sallad eller grön kvist som garnityr'],
+                    ingredients:'1 dl skalade räkor\n1 st tekaka\nmajonnäs\nsallad eller grön kvist som garnityr',
                     tags:['enkelt']
                 }
             );
@@ -212,7 +225,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     pageUrl:'Egen samling',
                     description:'Hacka purjo och ev. gul lök. Stek kyckling och purjo. Sätt på pasta under tiden.\nHäll på grädde och tillsätt vitlök, mango chutney och buljongtärning. Krydda ev. med salt och peppar.',
                     rating:'2',
-                    ingredientsList:['1 purjolök', '3 kycklingfiléer', '1-2 klyftor vitlök', '1dl mango chutney', 'salt och peppar'],
+                    ingredientsList:'1 purjolök\n3 kycklingfiléer\n1-2 klyftor vitlök\n1dl mango chutney\nsalt och peppar',
                     tags:['vardag', 'kyckling']
                 }
             );
@@ -229,7 +242,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                         pageUrl:'Egen samling',
                         description:'Gå på känn och krydda på en höft. Tillsätt ingredienser beroende på vad huset har att erbjuda och krydda efter behag.',
                         rating:'1',
-                        ingredientsList:['salt', 'peppar'],
+                        ingredients:'salt\npeppar',
                         tags:['enkelt']
                     });
                 this.sleep();
