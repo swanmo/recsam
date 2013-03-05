@@ -20,31 +20,6 @@ recsamApp.value('localStorage', window.localStorage);
 
 var lsKey = 'recsam';
 
-
-function message(severity, messageString) {
-    var messageIcon = 'glyphicons_245_chat';
-    var messageClass;
-    switch (severity) {
-        case "ok":
-            messageIcon = 'img/glyphicons_206_ok_2.png';
-            messageClass = 'alert alert-info';
-            break;
-        case "warning":
-            messageIcon = 'img/glyphicons_205_electricity.png';
-            messageClass = 'alert';
-            break;
-        case "error":
-            messageIcon = 'img/glyphicons_207_remove_2.png';
-            messageClass = 'alert';
-            break;
-        default:
-            messageIcon = 'img/glyphicons_245_chat.png';
-            messageClass = 'alert';
-            break;
-    }
-    return {icon:messageIcon, css:messageClass, message:messageString};
-}
-
 recsamApp.factory('MessageUtil', function(){
     return {
         getMessage: function(severity, messageString) {
@@ -98,7 +73,6 @@ recsamApp.factory('Recipes', function(localStorage){
             localStorage[lsKey] = JSON.stringify(recipesArr);
         },
         positionOfRecipe:function(_id_) {
-
             var recipesArr = this.allRecipes();
             for (var pos in recipesArr) {
                 if (recipesArr[pos].id == _id_) {
