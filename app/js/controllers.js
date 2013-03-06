@@ -39,6 +39,25 @@ function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localSto
 function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes) {
 	$scope.message = null;
 	$scope.recipe = Recipes.get($routeParams.recipeId);
+	$scope.allTags = Recipes.getAllTags();
+
+	$scope.$watch('allTags', function() {
+		alert("allTags changed: " + $scope.allTags);
+    	$(".tagManager").tagsManager({
+		    prefilled: ["kalle", "valle"],
+		    CapitalizeFirstLetter: false,
+		    preventSubmitOnEnter: true,
+		    typeahead: true,
+		    typeaheadAjaxSource: null,
+		    typeaheadSource: $scope.allTags,
+		    delimeters: [44, 188, 13],
+		    backspace: [8],
+		    blinkBGColor_1: '#0000ff',
+		    blinkBGColor_2: '#ff0000',
+		    hiddenTagListName: 'hiddenTagListA'
+		  });
+   	});
+	
 
 	$scope.save = function(recipe) {
 		Recipes.update(recipe);

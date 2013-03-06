@@ -20,7 +20,7 @@ describe('Recipe service', function() {
 
 	beforeEach(function() {
 	  localStorage = {
-      recsam: '[{"id":"rec_20120222_1735_123", "name":"Pangkaka", "ingredientsList":["6 dl mjölk", "3 dl vetemjöl", "salt"]}, {"id":"rec_20120222_0202_101", "name":"Estrella-burgare", "ingredientsList":["400 g nötfärs", "salt och peppar", "chili"]}]'
+      recsam: '[{"id":"rec_20120222_1735_123", "name":"Pangkaka", "ingredientsList":["6 dl mjölk", "3 dl vetemjöl", "salt"], "tags":["vardag", "vegetariskt"]}, {"id":"rec_20120222_0202_101", "name":"Estrella-burgare", "ingredientsList":["400 g nötfärs", "salt och peppar", "chili"], "tags":["vardag", "fest", "kyckling"]}]'
   	};
 	 
 	  module(function($provide) {
@@ -68,6 +68,16 @@ describe('Recipe service', function() {
     /*it('createId should return a string with format: rec_20120222_1735_123', function() {
       expect(recipeService.createId(new Date()).length > 16).toBe(true);
     });*/
+
+    it('getAllTags should return an array containing all tags of all recipes in localStorage', function() {
+      var tagsArr = recipeService.getAllTags();
+
+      expect(tagsArr.length).toBe(5);
+      expect(tagsArr).toContain('vardag');
+      expect(tagsArr).toContain('fest');
+      expect(tagsArr).toContain('vegetariskt');
+      expect(tagsArr).toContain('kyckling');
+    });
 
     it('store should add another recipe to localStorage', function() {
       expect(recipeService.allRecipes().length).toBe(2);

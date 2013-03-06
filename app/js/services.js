@@ -49,9 +49,17 @@ recsamApp.factory('MessageUtil', function(){
 
 recsamApp.factory('Recipes', function(localStorage){
     return {
-        dummy:function() {
-            alert("dummy call " + localStorage);
-            return "hello";
+        getAllTags:function() {
+            var recipesArr = this.allRecipes();
+            var tagArr = [];
+            for (var pos in recipesArr) {
+                if (recipesArr[pos].tags && recipesArr[pos].tags.length) {
+                    for (var tagPos in recipesArr[pos].tags) {
+                        tagArr.push(recipesArr[pos].tags[tagPos]);
+                    }
+                }
+            }
+            return tagArr;
         },
         allRecipes:function() {
             var storageStr = localStorage[lsKey];
@@ -61,12 +69,6 @@ recsamApp.factory('Recipes', function(localStorage){
             } else {
                 recipesArr = JSON.parse(storageStr);
             }
-            /*angular.forEach(recipesArr, function(recipe) {
-              recipe.isPageUrl = function() {
-                return recipe.pageUrl.indexOf
-
-              };
-            });*/
             return recipesArr;
         },
         setAllRecipes:function(recipesArr) {
@@ -198,7 +200,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     description:'Blanda ingredienserna och rör tills smeten är klumpfri. Låt helst smeten vila 1 timme.\nStek i flytande margarin.',
                     rating:'3',
                     ingredients:'6 dl mjölk\n3 dl vetemjöl\n2 ägg\n1 krm salt\ngrädde och sylt',
-                    tags:['enkelt']
+                    tags:['enkelt', 'vegetariskt', 'vardag']
                 }
             );
             this.sleep();
@@ -212,7 +214,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     description:'Bred smör på macka. Lägg på räkor och majonnäs. Toppa med ett salladsblad.',
                     rating:'2',
                     ingredients:'1 dl skalade räkor\n1 st tekaka\nmajonnäs\nsallad eller grön kvist som garnityr',
-                    tags:['enkelt']
+                    tags:['enkelt', 'kyckling']
                 }
             );
             this.sleep();
