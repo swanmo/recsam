@@ -21,13 +21,16 @@ function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils) {
 function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localStorage) {
 	$scope.master= {};
 	$scope.messge = null;
+
 	var firstTemplate = null;
+
 	if (Recipes.query().length == 0) {
 		firstTemplate = 'partials/template-first.htm';
 	}
 	$scope.template = { first: firstTemplate};
 
 	$scope.save = function(recipe) {
+		alert($('[name="hiddenTagListA"]').val());
 		recipe.saved=false;
 	    $scope.master = angular.copy(recipe);
 
@@ -41,25 +44,44 @@ function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes) {
 	$scope.recipe = Recipes.get($routeParams.recipeId);
 	$scope.allTags = Recipes.getAllTags();
 
+	$scope.noOfThingsLoaded = 0;
+
 	$scope.$watch('allTags', function() {
-		alert("allTags changed: " + $scope.allTags);
-    	$(".tagManager").tagsManager({
-		    prefilled: ["kalle", "valle"],
-		    CapitalizeFirstLetter: false,
-		    preventSubmitOnEnter: true,
-		    typeahead: true,
-		    typeaheadAjaxSource: null,
-		    typeaheadSource: $scope.allTags,
-		    delimeters: [44, 188, 13],
-		    backspace: [8],
-		    blinkBGColor_1: '#0000ff',
-		    blinkBGColor_2: '#ff0000',
-		    hiddenTagListName: 'hiddenTagListA'
-		  });
+		if ($scope.allTags.length) {
+			$scope.noOfThingsLoaded++;
+			$scope.afterFetched();
+		}
+
    	});
+
+   	$scope.$watch('recipe', function() {
+    	if ($scope.recipe.id) {
+			$scope.noOfThingsLoaded++;
+			$scope.afterFetched();
+		}
+   	});
+
+   	$scope.afterFetched = function() {
+   		if ($scope.noOfThingsLoaded == 2) {
+			$(".tagManager").tagsManager({
+			    prefilled: $scope.recipe.tags,
+			    CapitalizeFirstLetter: false,
+			    preventSubmitOnEnter: true,
+			    typeahead: true,
+			    typeaheadAjaxSource: null,
+			    typeaheadSource: $scope.allTags,
+			    delimeters: [44, 188, 13],
+			    backspace: [8],
+			    blinkBGColor_1: '#0000ff',
+			    blinkBGColor_2: '#ff0000',
+			    hiddenTagListName: 'hiddenTagListA'
+			});
+		}
+   	}
 	
 
 	$scope.save = function(recipe) {
+		alert($(".tagManager").val());
 		Recipes.update(recipe);
 		$scope.recipe = angular.copy(recipe);
 		$scope.message = MessageUtil.getMessage('ok', 'Recept sparat!');

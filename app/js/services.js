@@ -49,6 +49,7 @@ recsamApp.factory('MessageUtil', function(){
 
 recsamApp.factory('Recipes', function(localStorage){
     return {
+        defaultTags:['enkelt', 'fest', 'vardag', 'vegetariskt', 'långkok', 'barnvänligt', 'fisk', 'storkok', 'matlåda', 'mellanmål'],
         getAllTags:function() {
             var recipesArr = this.allRecipes();
             var tagArr = [];
@@ -59,7 +60,10 @@ recsamApp.factory('Recipes', function(localStorage){
                     }
                 }
             }
-            return tagArr;
+            return tagArr.concat(this.defaultTags).
+                filter(function(elem, pos, self) {
+                    return self.indexOf(elem) == pos;
+                });
         },
         allRecipes:function() {
             var storageStr = localStorage[lsKey];
@@ -227,7 +231,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     pageUrl:'Egen samling',
                     description:'Hacka purjo och ev. gul lök. Stek kyckling och purjo. Sätt på pasta under tiden.\nHäll på grädde och tillsätt vitlök, mango chutney och buljongtärning. Krydda ev. med salt och peppar.',
                     rating:'2',
-                    ingredientsList:'1 purjolök\n3 kycklingfiléer\n1-2 klyftor vitlök\n1dl mango chutney\nsalt och peppar',
+                    ingredients:'1 purjolök\n3 kycklingfiléer\n1-2 klyftor vitlök\n1dl mango chutney\nsalt och peppar',
                     tags:['vardag', 'kyckling']
                 }
             );

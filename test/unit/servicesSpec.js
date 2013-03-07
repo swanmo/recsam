@@ -69,14 +69,17 @@ describe('Recipe service', function() {
       expect(recipeService.createId(new Date()).length > 16).toBe(true);
     });*/
 
-    it('getAllTags should return an array containing all tags of all recipes in localStorage', function() {
+    it('getAllTags should return an array containing all unique tags of all recipes in localStorage', function() {
       var tagsArr = recipeService.getAllTags();
 
-      expect(tagsArr.length).toBe(5);
-      expect(tagsArr).toContain('vardag');
+      expect(tagsArr.length).toBe(11);
+      expect(tagsArr).toContain('vardag'); // Från recept i localStorage
       expect(tagsArr).toContain('fest');
       expect(tagsArr).toContain('vegetariskt');
       expect(tagsArr).toContain('kyckling');
+      expect(tagsArr).toContain('långkok'); // Från defaultTags
+      expect(tagsArr).toContain('barnvänligt');
+      expect(tagsArr).toContain('storkok');
     });
 
     it('store should add another recipe to localStorage', function() {

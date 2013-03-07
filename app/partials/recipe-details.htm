@@ -27,6 +27,11 @@
 				<p><strong>Källa:</strong> <span page-url-as-html page-url="recipe.pageUrl"></span>
 				<p><strong>Beskrivning</strong></p>
 				<div id="ingredientsDiv" class="well" style=" max-width: 720px; margin: 0 auto .2em" ng-bind-html-unsafe="recipe.description"></div>
+				<p><strong style="float:left;padding-top:6px">Taggar:&nbsp;&nbsp;</strong>
+  				<span ng-repeat="tag in recipe.tags" class="myTag">
+  					{{tag}}
+      				</span>
+				</p>
 			</div>
 
 		</div>

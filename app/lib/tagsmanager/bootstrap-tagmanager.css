@@ -1,9 +1,9 @@
-  .myTag
-  {
-    background: none repeat scroll 0 0 #CDE69C;
-    border: 1px solid #A5D24A;
-    border-radius: 3px 3px 3px 3px;
-    color: #638421;
+  .myTag {
+    // background: none repeat scroll 0 0 #CDE69C;
+    background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    // color: #638421;
 
 // to be tested    
 	display: block;
@@ -24,23 +24,22 @@
     height:18px;
     -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-  }      
-  .myTagError
-  {
+  }
+  .myTag a:hover {
+    text-decoration: none;
+  }
+  .myTagError {
     background-color: #F2DEDE;
   }      
-  .myTagRemover
-  {
+  .myTagRemover {
     color:silver;
   }
-  .tagManager
-  {
+  .tagManager {
     border-radius: 3px 3px 3px 3px;
     margin-top:0;
   }
 
-  .myFramedTag
-  {
+  .myFramedTag {
     background: none repeat scroll 0 0 #CDE69C;
     border: 1px solid #A5D24A;
     border-radius: 3px 3px 3px 3px;
@@ -64,8 +63,7 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
   }      
 
-  .myMinTag
-  {
+  .myMinTag {
     background: none repeat scroll 0 0 #CDE69C;
     border: 1px solid #A5D24A;
     border-radius: 3px 3px 3px 3px;
@@ -88,8 +86,7 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
   }      
 
-  .myMinNonTag
-  {
+  .myMinNonTag {
     font-family: helvetica;
     font-size: 11px;
     margin-bottom: 5px;
