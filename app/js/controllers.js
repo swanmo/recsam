@@ -13,25 +13,37 @@ function RecipeCtrl($scope, Recipes) {
 	console.log("loading complete");
 }
 
-function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils) {
+function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils, TagUtil) {
   $scope.recipe = Recipes.get($routeParams.recipeId);
+
   RecipeUtils.ingredientsAsHtml($scope.recipe);
+
+  $scope.$watch('recipe', function() {
+		TagUtil.setup('recipeTags',$scope.recipe.tags, null, true);
+	});
 }
 
-function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localStorage) {
+function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, TagUtil) {
 	$scope.master= {};
-	$scope.messge = null;
-
+	$scope.message = null;
 	var firstTemplate = null;
+
+	$scope.allTags = Recipes.getAllTags();
 
 	if (Recipes.query().length == 0) {
 		firstTemplate = 'partials/template-first.htm';
 	}
 	$scope.template = { first: firstTemplate};
 
+	$scope.$watch('allTags', function() {
+		if ($scope.allTags.length) {
+			TagUtil.setup('recipeTags',null, $scope.allTags, false);
+		}
+	});
+
 	$scope.save = function(recipe) {
-		alert($('[name="hiddenTagListA"]').val());
 		recipe.saved=false;
+		recipe.tags = TagUtil.tags;
 	    $scope.master = angular.copy(recipe);
 
 		Recipes.store($scope.master);
@@ -39,7 +51,7 @@ function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, localSto
 	};
 }
 
-function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes) {
+function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes, TagUtil) {
 	$scope.message = null;
 	$scope.recipe = Recipes.get($routeParams.recipeId);
 	$scope.allTags = Recipes.getAllTags();
@@ -51,8 +63,7 @@ function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes) {
 			$scope.noOfThingsLoaded++;
 			$scope.afterFetched();
 		}
-
-   	});
+	});
 
    	$scope.$watch('recipe', function() {
     	if ($scope.recipe.id) {
@@ -63,26 +74,14 @@ function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes) {
 
    	$scope.afterFetched = function() {
    		if ($scope.noOfThingsLoaded == 2) {
-			$(".tagManager").tagsManager({
-			    prefilled: $scope.recipe.tags,
-			    CapitalizeFirstLetter: false,
-			    preventSubmitOnEnter: true,
-			    typeahead: true,
-			    typeaheadAjaxSource: null,
-			    typeaheadSource: $scope.allTags,
-			    delimeters: [44, 188, 13],
-			    backspace: [8],
-			    blinkBGColor_1: '#0000ff',
-			    blinkBGColor_2: '#ff0000',
-			    hiddenTagListName: 'hiddenTagListA'
-			});
-		}
+   			TagUtil.setup('recipeTags',$scope.recipe.tags, $scope.allTags, false);
+	  	}
    	}
-	
 
 	$scope.save = function(recipe) {
-		alert($(".tagManager").val());
+		recipe.tags = TagUtil.tags;
 		Recipes.update(recipe);
+
 		$scope.recipe = angular.copy(recipe);
 		$scope.message = MessageUtil.getMessage('ok', 'Recept sparat!');
 	};

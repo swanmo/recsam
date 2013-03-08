@@ -7,12 +7,12 @@ describe('RecipeCtrl', function(){
 
   beforeEach(module('recsamApp')) ;
 
-
   beforeEach(module(function($provide) {
     var recipeService = {
-      query: function () { return [{"id":"2","name":"kalle"},{"id":"33","name":"valle"},{"id":"444","name":"tjalle"}]; }
-      
+      query: function () { return [{"id":"2","name":"kalle"},{"id":"33","name":"valle"},{"id":"444","name":"tjalle"}]; },
+      getAllTags: function() {return ['test', 'kalle']}
     };
+
     $provide.value('Recipes', recipeService);
   }));
 
@@ -35,10 +35,15 @@ describe('RecipeCreationCtrl with empty recipe query results', function(){
 
   beforeEach(module(function($provide) {
     var recipeService = {
-      query: function () { return queryResults; }
-      
+      query: function () { return queryResults; },
+      getAllTags: function() {return ['test', 'kalle']}
     };
     $provide.value('Recipes', recipeService);
+    var tagUtilService = {
+      tags:['test', 'lomosv'],
+      setup: function(tagitId, assignedTags, allTags, isReadonly) {}
+    };
+    $provide.value('TagUtil', tagUtilService);
   }));
 
   beforeEach(inject(function($rootScope, $controller) {
@@ -61,11 +66,17 @@ describe('RecipeCreationCtrl with non-null recipe query results', function(){
 
   beforeEach(module(function($provide) {
     var recipeService = {
-      query: function () { return queryResults; }
-      
+      query: function () { return queryResults; },
+      getAllTags: function() {return ['test', 'kalle']}
     };
     $provide.value('Recipes', recipeService);
+    var tagUtilService = {
+      tags:['test', 'lomosv'],
+      setup: function(tagitId, assignedTags, allTags, isReadonly) {}
+    };
+    $provide.value('TagUtil', tagUtilService);
   }));
+
 
   beforeEach(inject(function($rootScope, $controller) {
     scope = $rootScope.$new();

@@ -73,6 +73,7 @@ describe('Recipe service', function() {
       var tagsArr = recipeService.getAllTags();
 
       expect(tagsArr.length).toBe(11);
+// enkelt,fest,vardag,vegetariskt,långkok,barnvänligt,fisk,storkok,matlåda,mellanmål
       expect(tagsArr).toContain('vardag'); // Från recept i localStorage
       expect(tagsArr).toContain('fest');
       expect(tagsArr).toContain('vegetariskt');
