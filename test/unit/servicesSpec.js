@@ -69,7 +69,18 @@ describe('Recipe service', function() {
       expect(recipeService.createId(new Date()).length > 16).toBe(true);
     });*/
 
-    it('getAllTags should return an array containing all unique tags of all recipes in localStorage', function() {
+    it('getAllTags should return an array containing all unique tags of all recipes and the default ones', function() {
+      var tagsArr = recipeService.getAllTagsInUse();
+
+      expect(tagsArr.length).toBe(4);
+// enkelt,fest,vardag,vegetariskt,långkok,barnvänligt,fisk,storkok,matlåda,mellanmål
+      expect(tagsArr).toContain('vardag'); // Från recept i localStorage
+      expect(tagsArr).toContain('fest');
+      expect(tagsArr).toContain('vegetariskt');
+      expect(tagsArr).toContain('kyckling');
+    });
+
+    it('getAllTagsInUse should return an array containing all unique tags of all recipes in localStorage', function() {
       var tagsArr = recipeService.getAllTags();
 
       expect(tagsArr.length).toBe(11);

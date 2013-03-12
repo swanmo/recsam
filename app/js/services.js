@@ -49,17 +49,12 @@ recsamApp.factory('MultiTagUtil', function(){
                 availableTags: allTags,
                 removeConfirmation: true,
                 onTagAdded: function(event, tag) {
-                    /*var all = "";
-                    for (var key in event) {
-                        all+=key + '\n';
-                    }*/
                     me.setTags(tagitInput, me)
-                    // me.tags = me.setTags(tagitInput.tagit(me.tagitInput).tagit("assignedTags"));
 
-                }/*,
+                },
                 onTagRemoved: function(event, tag) {
-                    me.tags = this.tagitInput.tagit(me.tagitInput).tagit("assignedTags");
-                }*/
+                    me.setTags(tagitInput, me)
+                }
             });
         }
     }
@@ -95,8 +90,13 @@ recsamApp.factory('MessageUtil', function(){
 recsamApp.factory('Recipes', function(localStorage){
     return {
         defaultTags:['enkelt', 'fest', 'vardag', 'vegetariskt', 'långkok', 'barnvänligt', 'fisk', 'storkok', 'matlåda', 'mellanmål'],
-
-        getAllTags:function() {
+        getAllTagsInUse:function() {
+            return this.getAllTagsInRecipes().
+                filter(function(elem, pos, self) {
+                    return self.indexOf(elem) == pos;
+                });
+        },
+        getAllTagsInRecipes:function() {
             var recipesArr = this.allRecipes();
             var tagArr = [];
             for (var pos in recipesArr) {
@@ -106,7 +106,10 @@ recsamApp.factory('Recipes', function(localStorage){
                     }
                 }
             }
-            return tagArr.concat(this.defaultTags).
+            return tagArr;
+        },
+        getAllTags:function() {
+            return this.getAllTagsInRecipes().concat(this.defaultTags).
                 filter(function(elem, pos, self) {
                     return self.indexOf(elem) == pos;
                 });
