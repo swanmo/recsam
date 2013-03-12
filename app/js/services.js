@@ -20,28 +20,47 @@ recsamApp.value('localStorage', window.localStorage);
 
 var lsKey = 'recsam';
 
-recsamApp.factory('TagUtil', function(){
+recsamApp.factory('MultiTagUtil', function(){
     return {
-        tags:null,
-        tagitInput:null,
+        tags:[],
+        tagitInput:[],
+        setTags: function(tagitInputField, thiz) {
+            for(var tagitPos in thiz.tagitInput) {
+                if (thiz.tagitInput[tagitPos] == tagitInputField) {
+                    thiz.tags[tagitPos] = thiz.tagitInput[tagitPos].tagit("assignedTags");
+                }
+            }
+        },
+        getTags: function(tagitId) {
+            for(var tagitPos in this.tagitInput) {
+                if (this.tagitInput[tagitPos].attr('id') == tagitId) {
+                    return this.tags[tagitPos];
+                }
+            }
+        },
         setup: function(tagitId, assignedTags, allTags, isReadonly) {
-            this.tagitInput = $('#'+tagitId);
-            this.tagitInput.val(assignedTags);
+            var tagitInput = $('#'+tagitId);
+            this.tagitInput.push(tagitInput);
+            tagitInput.val(assignedTags);
 
             var me = this;
-            this.tagitInput.tagit({
+            tagitInput.tagit({
                 readOnly: isReadonly,
                 availableTags: allTags,
                 removeConfirmation: true,
                 onTagAdded: function(event, tag) {
-                    me.tags = me.tagitInput.tagit(me.tagitInput).tagit("assignedTags");
+                    /*var all = "";
+                    for (var key in event) {
+                        all+=key + '\n';
+                    }*/
+                    me.setTags(tagitInput, me)
+                    // me.tags = me.setTags(tagitInput.tagit(me.tagitInput).tagit("assignedTags"));
 
-                },
+                }/*,
                 onTagRemoved: function(event, tag) {
                     me.tags = this.tagitInput.tagit(me.tagitInput).tagit("assignedTags");
-                }
+                }*/
             });
-
         }
     }
 });

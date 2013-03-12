@@ -13,17 +13,17 @@ function RecipeCtrl($scope, Recipes) {
 	console.log("loading complete");
 }
 
-function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils, TagUtil) {
+function RecipeDetailCtrl($scope, $routeParams, Recipes, RecipeUtils, MultiTagUtil) {
   $scope.recipe = Recipes.get($routeParams.recipeId);
 
   RecipeUtils.ingredientsAsHtml($scope.recipe);
 
   $scope.$watch('recipe', function() {
-		TagUtil.setup('recipeTags',$scope.recipe.tags, null, true);
+		MultiTagUtil.setup('recipeTags',$scope.recipe.tags, null, true);
 	});
 }
 
-function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, TagUtil) {
+function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, MultiTagUtil) {
 	$scope.master= {};
 	$scope.message = null;
 	var firstTemplate = null;
@@ -37,13 +37,13 @@ function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, TagUtil)
 
 	$scope.$watch('allTags', function() {
 		if ($scope.allTags.length) {
-			TagUtil.setup('recipeTags',null, $scope.allTags, false);
+			MultiTagUtil.setup('recipeTags',null, $scope.allTags, false);
 		}
 	});
 
 	$scope.save = function(recipe) {
 		recipe.saved=false;
-		recipe.tags = TagUtil.tags;
+		recipe.tags = MultiTagUtil.getTags('recipeTags');
 	    $scope.master = angular.copy(recipe);
 
 		Recipes.store($scope.master);
@@ -51,7 +51,7 @@ function RecipeCreationCtrl($scope, $routeParams, Recipes, MessageUtil, TagUtil)
 	};
 }
 
-function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes, TagUtil) {
+function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes, MultiTagUtil) {
 	$scope.message = null;
 	$scope.recipe = Recipes.get($routeParams.recipeId);
 	$scope.allTags = Recipes.getAllTags();
@@ -74,12 +74,12 @@ function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes, TagUtil) {
 
    	$scope.afterFetched = function() {
    		if ($scope.noOfThingsLoaded == 2) {
-   			TagUtil.setup('recipeTags',$scope.recipe.tags, $scope.allTags, false);
+   			MultiTagUtil.setup('recipeTags',$scope.recipe.tags, $scope.allTags, false);
 	  	}
    	}
 
 	$scope.save = function(recipe) {
-		recipe.tags = TagUtil.tags;
+		recipe.tags = MultiTagUtil.getTags('recipeTags');
 		Recipes.update(recipe);
 
 		$scope.recipe = angular.copy(recipe);
