@@ -1,0 +1,23 @@
+<div class="container">
+    <div ng-include  src="'partials/template-message.htm'"></div>
+
+    <form id="recipeFrm">
+		<fieldset>
+		  <legend style="width:100%">
+		  		<div style="width:100%">Matsedel</div>
+		    </legend>
+			<div class="row-fluid">
+			    <div class="span12">
+			      <label>Antal rätter</label>
+			      <div id="sliderCourses"></div>{{noOfCourses}}
+			    </div>
+			</div>
+			<div class="row-fluid">
+			    <div class="span12">
+			      <label>Taggar som ska ingå i minst ett recept</label>
+			      <input type="text" name="recipeTagsTemplate1" id="recipeTagsTemplate1" placeholder="Taggar" class="tagManager"/>
+			    </div>
+			</div>
+  		</fieldset>
+	</form>
+</div>
