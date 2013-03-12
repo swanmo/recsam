@@ -25,8 +25,8 @@ var recsamApp = angular.module('recsamApp', ['myApp.filters', 'myApp.services', 
 
 
     $routeProvider.when('/menu', {
-    	templateUrl: 'partials/recipes-static.htm',
-    	controller: RecipeCtrl});
+    	templateUrl: 'partials/menu.htm',
+    	controller: MenuCtrl});
     $routeProvider.when('/shopping-cart', {
     	templateUrl: 'partials/construction.htm',
     	controller: RecipeCtrl});
