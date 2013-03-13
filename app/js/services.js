@@ -91,8 +91,10 @@ recsamApp.factory('Recipes', function(localStorage){
     return {
         defaultTags:['enkelt', 'fest', 'vardag', 'vegetariskt', 'långkok', 'barnvänligt', 'fisk', 'storkok', 'matlåda', 'mellanmål'],
         getAllTagsInUse:function() {
-            return this.getAllTagsInRecipes().
+            var allTagsInUse = this.getAllTagsInRecipes();
+            return allTagsInUse.
                 filter(function(elem, pos, self) {
+
                     return self.indexOf(elem) == pos;
                 });
         },
@@ -101,7 +103,10 @@ recsamApp.factory('Recipes', function(localStorage){
             var tagArr = [];
             for (var pos in recipesArr) {
                 if (recipesArr[pos].tags && recipesArr[pos].tags.length) {
+                    console.log("Content of tags in pos: " + pos + "->" + JSON.stringify(recipesArr[pos].tags));
+                    
                     for (var tagPos in recipesArr[pos].tags) {
+                        console.log("    Pushing:: " + recipesArr[pos]['tags'][tagPos]);
                         tagArr.push(recipesArr[pos].tags[tagPos]);
                     }
                 }
@@ -253,7 +258,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     description:'Blanda ingredienserna och rör tills smeten är klumpfri. Låt helst smeten vila 1 timme.\nStek i flytande margarin.',
                     rating:'3',
                     ingredients:'6 dl mjölk\n3 dl vetemjöl\n2 ägg\n1 krm salt\ngrädde och sylt',
-                    tags:'enkelt,vegetariskt,vardag'
+                    tags:['enkelt','vegetariskt','vardag']
                 }
             );
             this.sleep();
@@ -267,7 +272,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     description:'Bred smör på macka. Lägg på räkor och majonnäs. Toppa med ett salladsblad.',
                     rating:'2',
                     ingredients:'1 dl skalade räkor\n1 st tekaka\nmajonnäs\nsallad eller grön kvist som garnityr',
-                    tags:'enkelt,kyckling'
+                    tags:['enkelt','kyckling']
                 }
             );
             this.sleep();
@@ -281,7 +286,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                     description:'Hacka purjo och ev. gul lök. Stek kyckling och purjo. Sätt på pasta under tiden.\nHäll på grädde och tillsätt vitlök, mango chutney och buljongtärning. Krydda ev. med salt och peppar.',
                     rating:'2',
                     ingredients:'1 purjolök\n3 kycklingfiléer\n1-2 klyftor vitlök\n1dl mango chutney\nsalt och peppar',
-                    tags:'vardag,kyckling'
+                    tags:['vardag','kyckling']
                 }
             );
         },
@@ -298,7 +303,7 @@ recsamApp.factory('RecipesDevUtils', function(Recipes){
                         description:'Gå på känn och krydda på en höft. Tillsätt ingredienser beroende på vad huset har att erbjuda och krydda efter behag.',
                         rating:'1',
                         ingredients:'salt\npeppar',
-                        tags:'enkelt,auto'
+                        tags:['enkelt','auto']
                     });
                 this.sleep();
             }
