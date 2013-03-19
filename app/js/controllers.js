@@ -80,6 +80,7 @@ function RecipeEditCtrl($scope, $routeParams, MessageUtil, Recipes, MultiTagUtil
 
 	$scope.save = function(recipe) {
 		recipe.tags = MultiTagUtil.getTags('recipeTags');
+
 		Recipes.update(recipe);
 
 		$scope.recipe = angular.copy(recipe);

@@ -12,7 +12,6 @@ function MenuCtrl($scope, Recipes, MultiTagUtil) {
 
 
 	$scope.$watch('allTags', function() {
-		alert("alltagsinuse");
 		MultiTagUtil.setup('recipeTagsTemplate1', null,  $scope.allTags, false);
 		MultiTagUtil.setup('recipeTagsTemplate2', null, $scope.allTags, false);
 		MultiTagUtil.setup('recipeTagsTemplate3', null, $scope.allTags, false);
@@ -31,5 +30,9 @@ function MenuCtrl($scope, Recipes, MultiTagUtil) {
 		});
   	}
   	$scope.setup();
+
+  	$scope.createMenu = function() {
+  		alert("create");
+  	}
 }
 

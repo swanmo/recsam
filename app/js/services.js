@@ -54,6 +54,11 @@ recsamApp.factory('MultiTagUtil', function(){
                 },
                 onTagRemoved: function(event, tag) {
                     me.setTags(tagitInput, me)
+                },
+                beforeTagAdded: function(event, ui) {
+                    // do something special
+                    console.log(ui.tag);
+                    console.log(ui.event);
                 }
             });
         }
