@@ -50,11 +50,10 @@ angular.module('myApp.directives', []).
   directive('stargazer', function($rootScope) {
     var linkFn = function(scope, element, attrs) {
         var rating = attrs.rating;
-        console.log("Stargazer: rating: " + rating);
 
         function starClicked() {
             console.log('click star');
-            // scope.$apply('showInput = true');
+            // scope.$apply('rating = 1');
         }
 
         function indicate(rating) {
@@ -66,13 +65,10 @@ angular.module('myApp.directives', []).
             } else {
               $(this).removeClass("selected").addClass("unselected");
             }
-            // console.log( index + ": " + $(this).removeClass("star") );
           });
         }
         var divs = element.children()[0].children;
-        for(var key in element.children()[0].children) {
-          // alert(key);
-        }
+
         angular.element(divs[0]).bind("click", function() {console.log("star 1"); scope.$apply('rating = 1');indicate(scope.rating);});
         angular.element(divs[1]).bind("click", function() {console.log("star 2"); scope.$apply('rating = 2');indicate(scope.rating);});
         angular.element(divs[2]).bind("click", function() {console.log("star 3"); scope.$apply('rating = 3');indicate(scope.rating);});
@@ -90,45 +86,6 @@ angular.module('myApp.directives', []).
         transclude: true
     };
   }).
-  directive('replybox', function($rootScope) {
-    var linkFn = function(scope, element, attrs) {
-        var label = angular.element(element.children()[0]);
-        var bind = attrs.bind;
-        
-        var desc = scope.$eval(attrs.bind);
-        alert(bind + ": " + desc);
-        scope.showInput = false;
-
-        label.bind("click", textbox);
-
-        function textbox() {
-            console.log('click');
-            scope.$apply('showInput = true');
-        }
-    };
-    return {
-        link: linkFn,
-        restrict: 'E',
-        scope: {
-            label: '@',
-            bind: '=',
-            desc: '@'
-        },
-        template: '<a ng-hide="showInput">{{label}}</a><textarea ng-show="showInput" ng-model="bind"></textarea><p>bind:{{bind}}, desc:{{desc}}</p>',
-        transclude: true
-    };
-  }).
-  directive('testElem', function () {
-    return {
-        restrict: 'A',
-        template: '<div class="mydirectiveclass"><h1>hello...</h1><p ng-repeat="obj in arr">{{obj}}</p></div>',
-        //templateUrl: '/partials/template.html',
-        link: function (scope, iterStartElement, attr) {
-            $(".mydirectiveclass").css({'background-color' : 'yellow'});
-            scope.arr = ["mikhail", "is", "the", "best"];
-        }
-    };
-}).
   directive('appVersion', ['version', function(version) {
     return function(scope, elm, attrs) {
       elm.text(version);
