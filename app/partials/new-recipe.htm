@@ -47,6 +47,10 @@
 		      <label>Beskrivning</label>
 		      <textarea rows="11" style="width:100%"  ng-model="recipe.description"></textarea>
 		      <input type="text" name="recipeTags" id="recipeTags" placeholder="Tags" class="tagManager"/>
+		      <div>
+			    <!--replybox label="my label" bind="recipe.description"></replybox-->
+			    <stargazer rating="recipe.rating"></stargazer> {{recipe.rating}}
+			</div>
 		    </div>
 		  </div>
 		</fieldset>
