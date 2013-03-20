@@ -26,7 +26,7 @@ div.recipe-list-container img {
 .navbar-inner:hover {
   opacity: 1;
 }
-.star {
+.starsSel div {
   width: 25px;
   height: 25px;
   cursor: pointer;
@@ -34,9 +34,15 @@ div.recipe-list-container img {
   padding-right: .2em;
   display: inline-block;
 }
-.selected {
+.starsSel .selected {
   background-image: url(/app/img/glyphicons_049_star.png);
 }
-.unselected {
+.starsSel .unselected {
   background-image: url(/app/img/glyphicons_048_dislikes.png);
+}
+.starsSel:hover div:hover {
+  opacity: 1;
+}
+.starsSel:hover div:hover ~ div {
+  opacity: .5;
 }

@@ -60,7 +60,7 @@ angular.module('myApp.directives', []).
         function indicate(rating) {
           console.log("indicate " + rating + " stars");
 
-          $(".star").each(function( index ) {
+          $(".starsSel div").each(function( index ) {
             if (index < rating) {
               $(this).removeClass("unselected").addClass("selected");
             } else {
@@ -69,12 +69,15 @@ angular.module('myApp.directives', []).
             // console.log( index + ": " + $(this).removeClass("star") );
           });
         }
-
-        angular.element(element.children()[0]).bind("click", function() {console.log("star 1"); scope.$apply('rating = 1');indicate(scope.rating);});
-        angular.element(element.children()[1]).bind("click", function() {console.log("star 2"); scope.$apply('rating = 2');indicate(scope.rating);});
-        angular.element(element.children()[2]).bind("click", function() {console.log("star 3"); scope.$apply('rating = 3');indicate(scope.rating);});
-        angular.element(element.children()[3]).bind("click", function() {console.log("star 4"); scope.$apply('rating = 4');indicate(scope.rating);});
-        angular.element(element.children()[4]).bind("click", function() {console.log("star 5"); scope.$apply('rating = 5');indicate(scope.rating);});
+        var divs = element.children()[0].children;
+        for(var key in element.children()[0].children) {
+          // alert(key);
+        }
+        angular.element(divs[0]).bind("click", function() {console.log("star 1"); scope.$apply('rating = 1');indicate(scope.rating);});
+        angular.element(divs[1]).bind("click", function() {console.log("star 2"); scope.$apply('rating = 2');indicate(scope.rating);});
+        angular.element(divs[2]).bind("click", function() {console.log("star 3"); scope.$apply('rating = 3');indicate(scope.rating);});
+        angular.element(divs[3]).bind("click", function() {console.log("star 4"); scope.$apply('rating = 4');indicate(scope.rating);});
+        angular.element(divs[4]).bind("click", function() {console.log("star 5"); scope.$apply('rating = 5');indicate(scope.rating);});
         indicate(scope.rating);
     };
     return {
@@ -83,7 +86,7 @@ angular.module('myApp.directives', []).
         scope: {
             rating: '='
         },
-        template: '<div id="starSel1" class="star selected"></div><div id="starSel2" class="star selected"></div><div id="starSel3" class="star selected"></div><div id="starSel4" class="star selected"></div><div id="starSel5" class="star selected"></div>',
+        template: '<div class="starsSel" title="{{rating}} stjärnor"><div id="starSel1" class="selected"></div><div id="starSel2" class="selected"></div><div id="starSel3" class="selected"></div><div id="starSel4" class="selected"></div><div id="starSel5" class="selected"></div></div>',
         transclude: true
     };
   }).
