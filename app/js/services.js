@@ -108,10 +108,8 @@ recsamApp.factory('Recipes', function(localStorage){
             var tagArr = [];
             for (var pos in recipesArr) {
                 if (recipesArr[pos].tags && recipesArr[pos].tags.length) {
-                    console.log("Content of tags in pos: " + pos + "->" + JSON.stringify(recipesArr[pos].tags));
                     
                     for (var tagPos in recipesArr[pos].tags) {
-                        console.log("    Pushing:: " + recipesArr[pos]['tags'][tagPos]);
                         tagArr.push(recipesArr[pos].tags[tagPos]);
                     }
                 }
