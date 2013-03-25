@@ -47,66 +47,69 @@ angular.module('myApp.directives', []).
 		};
 	}).
 
-/* <tagmanager tags="testAttr.kalle" selectable="allTags.tags"></tagmanager> */
 directive('tagmanager', function($rootScope) {
 		var linkFn = function(scope, element, attrs) {
-				// console.log("inputid   : " + attrs.inputid + " =====================");
-				// console.log("tags      : " + scope.selectedtags.selected + ", resolved: " + scope.$eval(scope.selectedtags));
-				// console.log("selectable: " + attrs.selectable + ", resolved: " + scope.$eval(attrs.selectable));
+			// console.log("inputid   : " + attrs.inputid + " =====================");
+			// console.log("tags      : " + scope.selectedtags.selected + ", resolved: " + scope.$eval(scope.selectedtags));
+			// console.log("selectable: " + attrs.selectable + ", resolved: " + scope.$eval(attrs.selectable));
 
 
-				var bindTags = function(_scope, _inputid) {
-					var selectedTags = $("#" + _inputid).tagit("assignedTags");
-					console.log('onTagAdded: ' + _inputid + "; " + selectedTags);
+			var bindTags = function(_scope, _inputid) {
+				var selectedTags = $("#" + _inputid).tagit("assignedTags");
+				console.log('onTagAdded: ' + _inputid + "; " + selectedTags);
 
-					_scope.selectedtags.selected = selectedTags;
-					if(_scope.$$phase) {
-					  sc.$digest();
-					}
+				_scope.selectedtags.selected = selectedTags;
+				if(_scope.$$phase) {
+				  _scope.$digest();
 				}
+			}
 
-				var setItUp = function() {
-					var input = element.children()[0];
-					$(input).val(scope.selectedtags.selected);
-					// sc.selectedtags.selected = sc.selectedtags.selected;
-					var setupOngoing = true;
+			var setItUp = function() {
+				var input = element.children()[0];
+				$(input).val(scope.selectedtags.selected);
+				var setupOngoing = true;
 
-					$(input).tagit({
-							readOnly: false,
-							availableTags: scope.selectable,
-							removeConfirmation: true,
-							onTagAdded: function(event, tag) {
-								if (!setupOngoing) {
-									bindTags(scope, inputId);
-								}
-							},
-							onTagRemoved: function(event, tag) {
+				$(input).tagit({
+						readOnly: false,
+						availableTags: scope.selectable,
+						removeConfirmation: true,
+						onTagAdded: function(event, tag) {
+							if (!setupOngoing) {
 								bindTags(scope, inputId);
-									
 							}
-					});
-					setupOngoing = false;
-				}
+						},
+						onTagRemoved: function(event, tag) {
+							bindTags(scope, inputId);
+						}
+				});
+				setupOngoing = false;
+			}
 
-				var inputId = attrs.inputid;
+			attrs.$observe("selectable", function(value) {
+				if(value) {
+					setItUp();
+				}					
+			});
 
-				attrs.$observe("selectable", function(value) {
-					if(value) {
-						setItUp();
-					}					
-    		});
+			var inputId;
+
+			attrs.$observe("inputid", function(value) {
+				if(value) {
+					inputId = value;
+				}					
+			});
 
 		};
 		return {
-				link: linkFn,
-				restrict: 'E',
-				scope: {
-						selectedtags: '=tags',
-						inputid: '@',
-						selectable: '=selectable'
-				},
-				template: '<input type="text" id="{{inputid}}" class="tagManager"/>',
-				transclude: true
+			link: linkFn,
+			restrict: 'E',
+			scope: {
+				selectedtags: '=tags',
+				inputid: '@',
+				selectable: '=selectable'
+			},
+			template: '<input type="text" id="{{inputid}}" class="tagManager"/>',
+			transclude: true
 		};
 	}).
 	directive('stargazer', function($rootScope) {

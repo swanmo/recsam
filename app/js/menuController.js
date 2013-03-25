@@ -8,21 +8,31 @@ function MenuCtrl($scope, Recipes, MultiTagUtil) {
   	$scope.noOfCourses = 1;
   	$scope.foo = {name: "Umur"};
 	// $scope.allTags = {tags: Recipes.getAllTagsInUse(), tags2: Recipes.getAllTagsInUse(), selected:[], selected2:[]};
-	$scope.tags1 = {selected: ["tagAlpha", "tagBravo", "tagCharlie"], selectable: ["asdas", "adsa"]};
-	$scope.tags2 = {selected: ["vardag"], selectable: Recipes.getAllTagsInUse()};
+	$scope.selectableTags = Recipes.getAllTagsInUse();
+	$scope.includingSelections = [];
+	$scope.excludingSelections = [];
 	var descriptionTemplate = 'partials/template-menu-intro.htm';
 
 	$scope.setupSelections = function() {
-		// $scope.newSelectionInclude();
-		// $scope.newSelectionExclude();
+		$scope.newSelectionInclude();
+		$scope.newSelectionExclude();
 	}
 
+	/* <tagmanager tags="selection.tags" selectable="selection.selectable" inputid="kalle01"></tagmanager> */
 	$scope.newSelectionInclude = function() {
-		$scope.includingSelections.push({numberOfRecipes:"minst 1",tags:[], id:'sel1_' + ($scope.includingSelections.length + 1)});
+		$scope.includingSelections.push(
+			{numberOfRecipes:"minst 1",
+			tags:{selected:["varan"]},
+			id:'sel1_' + ($scope.includingSelections.length + 1),
+			selectable: $scope.selectableTags});
 	}
 
 	$scope.newSelectionExclude = function() {
-		$scope.excludingSelections.push({numberOfRecipes:"något",tags:[], id:'sel1_'+ ($scope.excludingSelections.length + 1)});
+		$scope.excludingSelections.push({
+			numberOfRecipes:"något",
+			tags:{selected:["fett", "kalle"]},
+			id:'sel2_'+ ($scope.excludingSelections.length + 1),
+			selectable: $scope.selectableTags});
 	}
 	
   	$scope.setup = function() {
@@ -43,25 +53,15 @@ function MenuCtrl($scope, Recipes, MultiTagUtil) {
   	}
 
   	$scope.createMenu = function() {
-
-  		alert($scope.tags1.selected + "\n" + $scope.tags2.selected);
-  		var str = "";
-  		var cnt = 0;
-  		for (var key in $scope.tags1.selected) {
-			str+=key + " ";
-			if ((++cnt % 10) == 10) {
-				str+="\n";
-			}
-  		}
-  		// alert( str);
-
-  		for (var pos in $scope.includingSelections) {
-  			var tags = recipe.tags = MultiTagUtil.getTags($scope.includingSelections[pos].id);
-  			alert("Including:\n" + $scope.includingSelections[pos].numberOfRecipes + " " + tags);
-  			
-  		}
-  		
-  		
+  		var str = "Including:\n";
+  		for (var i = $scope.includingSelections.length - 1; i >= 0; i--) {
+  			str += " including id: " + $scope.includingSelections[i].id + ",\n tags: " + $scope.includingSelections[i].tags.selected + "(" +$scope.includingSelections[i].tags.selected.selected+ ")";
+  		};
+		str += "\nExcluding:\n";
+  		for (var i = $scope.excludingSelections.length - 1; i >= 0; i--) {
+  			str += " excluding id: " + $scope.excludingSelections[i].id + ",\n tags: " + $scope.excludingSelections[i].tags.selected;
+  		};
+  		alert(str);	
   	}
   	$scope.setup();
 }
