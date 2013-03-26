@@ -4,8 +4,13 @@
 	<form id="recipeFrm">
 		<fieldset>
 			<legend style="width:100%">
-				<div style="width:100%">Matsedel</div>
+				<div style="width:100%">Skapa en matsedel</div>
 			</legend>
+			<div class="row-fluid">
+				<div class="span12">
+					<p style="color:#777">Välj hur många rätter som skall ingå i din matsedel. Fyll därefter i ytterligare kriterier innan du väljer &quot;Skapa matsedel&quot;. Skapa sedan en en inköpslista för matsedeln.</p>
+				</div>
+			</div>
 			<div class="row-fluid">
 				<div class="span4">
 					<label>Antal rätter</label>
@@ -21,18 +26,26 @@
 						<option value="9">9 recept</option>
 						<option value="10">10 recept</option>
 					</select>
-					{{noOfCourses}} rätter
 				</div>
 			</div>
 			<div class="row-fluid">
 				<div class="span12">
-					<p></p>
-					<p><span style="font-size:2em;font-weight:bold">Villkor för att välja ut recept&nbsp;</span></p>
+					<label>Inkludera recept med </label>
+					<select ng-model="rating">
+						<option value="0">med eller utan stjärnor</option>
+						<option value="1">1 stjärna eller fler</option>
+						<option value="2">2 stjärnor eller fler</option>
+						<option value="3">3 stjärnor eller fler</option>
+						<option value="4">4 stjärnor eller fler</option>
+						<option value="5">5 stjärnor eller fler</option>
+					</select>
+					<hr>
 				</div>
 			</div>
+
 			<div ng-repeat="selection in includingSelections">
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="span6">
 						<label>Taggar som ska ingå i 
 							<select ng-model="selection.numberOfRecipes">
 								<option>minst 1</option>
@@ -43,25 +56,20 @@
 							</select>
 							recept</label>
 					</div>
-				</div>
-				<div class="row-fluid">
 					<div class="span6">
 						<tagmanager tags="selection.tags" selectable="selection.selectable" inputid="{{selection.id}}"></tagmanager>
 					</div>
 				</div>
 			</div>
-
-			
 			
 			<div class="row-fluid">
 				<div class="span12">
-					<a ng-click="newSelectionInclude()">Lägg till fler villkor för taggar som ska ingå i recept</a>
-					<hr>
+					<a ng-click="newSelectionInclude([])">Lägg till fler villkor för taggar som ska ingå i recept</a>
 				</div>
 			</div>
 			<div ng-repeat="selection in excludingSelections">
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="span6">
 						<label>Taggar som <strong>inte</strong> ska ingå i 
 							<select ng-model="selection.numberOfRecipes">
 								<option>1</option>
@@ -72,17 +80,14 @@
 							</select> recept
 						</label>
 					</div>
-				</div>
-				<div class="row-fluid">
 					<div class="span6">
-						{{selection.id}}
 						<tagmanager tags="selection.tags" selectable="selection.selectable" inputid="{{selection.id}}"></tagmanager>
 					</div>
 				</div>
-				<div class="row-fluid">
-					<div class="span12">
-						<a ng-click="newSelectionExclude()">Lägg till fler villkor för taggar som inte ska ingå i recept</a>
-					</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+					<a ng-click="newSelectionExclude()">Lägg till fler villkor för taggar som inte ska ingå i recept</a>
 				</div>
 			</div>
 			<button class="btn btn-large" ng-click="createMenu()">Skapa matsedel</button>
