@@ -200,7 +200,7 @@ describe('MessageUtil service', function() {
       });
     });
 
-    it('MessageUtil should create object for severit ok', function() {
+    it('MessageUtil should create object for severity ok', function() {
       var results = messageUtilService.getMessage('ok', 'Alright');
 
       expect(results.icon).toEqual('img/glyphicons_206_ok_2.png');
