@@ -46,10 +46,13 @@ recsamApp.factory('Menu', function(Recipes, MenuUtils){
         */
         enumerateCriteria: function(menuCriteria) {
             for (var pos in menuCriteria) {
-                menuCriteria[pos].no = parseInt(pos);
+                // menuCriteria[pos].no = parseInt(pos);
                 menuCriteria[pos].matchingRecipes = [];
-                menuCriteria[pos].selectedRecipes = [];
+                menuCriteria[pos].selectedRecipe = null;
                 menuCriteria[pos].unfulfilled = false;
+                if (!menuCriteria[pos].tags) {
+                    menuCriteria[pos].tags = [];
+                }
             }
         },
         containsAll: function(tagArrToScan, tagArrToFind) {
@@ -89,7 +92,7 @@ recsamApp.factory('Menu', function(Recipes, MenuUtils){
             }
             return numberOfRecipesInt;
         },
-        getLikeliness: function(criteria) {
+        /*getLikeliness: function(criteria) {
             // alert("Likliness " + criteria.matchingRecipes.length + "/" + this.numberOfRecipesAsInt(criteria.numberOfRecipes) + "=" + (criteria.matchingRecipes.length / this.numberOfRecipesAsInt(criteria.numberOfRecipes)));
             return criteria.matchingRecipes.length / this.numberOfRecipesAsInt(criteria.numberOfRecipes);
         },
@@ -98,7 +101,7 @@ recsamApp.factory('Menu', function(Recipes, MenuUtils){
             menuCriteria = menuCriteria.sort(function(criteria1, criteria0) {
                 return me.getLikeliness(criteria1) - me.getLikeliness(criteria0);
             })
-        },
+        },*/
         getAllRecipes: function(recipes, _minNoOfStars) {
             if(_minNoOfStars && _minNoOfStars > 0) {
                 var __minNoOfStars = _minNoOfStars;
@@ -143,7 +146,7 @@ recsamApp.factory('Menu', function(Recipes, MenuUtils){
 
             return randomizedRecipes;
         },
-        totalNumberOfSelectedRecipes:function(menuCriteria) {
+        /*totalNumberOfSelectedRecipes:function(menuCriteria) {
             var total = 0;
             for(pos in menuCriteria) {
                 total += menuCriteria[pos].selectedRecipes.length;
@@ -165,7 +168,7 @@ recsamApp.factory('Menu', function(Recipes, MenuUtils){
                 }
                 // Sammanlagt för många recept... Vi måste finna recept som matchar flera villkor.
             }
-        },
+        },*/
         getRecipesForCriteria:function(totalNumberOfMeals, menuCriteria, criteriaPos, accumulatedTags) {
             var recipes = getRandomSelection(menuCriteria[criteriaPos], accumulatedTags);
 
@@ -174,28 +177,57 @@ recsamApp.factory('Menu', function(Recipes, MenuUtils){
             // KOntrollera matchingRecipes efter recept som matchar menuCriteria[criteriaPos-n], och som INTE ingår i menuCriteria[criteriaPos-(n + x)]
 
         },
-        createMenu:function(menuCriteria, numberOfMeals, minNoOfStars) {
-            var allRecipes = this.getAllRecipes(Recipe.allRecipes(), minNoOfStars);
+        /*
+                    {no:($scope.selectionsPerRecipe.length + 1),
+                    tags:{selected:arrSuggestions},
+                    id:'sel1_' + ($scope.selectionsPerRecipe.length + 1),
+                    selectable: $scope.selectableTags}
+        */
+        /*
+        tagsInAllRecipes:[],
+        menuCriteriaPerRecipe:[],
+        numberOfMeals:4
+        minNoOfStars:5
+        */
+        createMenu:function(cond) {
+            /*1 för varje dag {
+                2.1 VÄLJ första recept som inte tidigare är använt
+                2.2. om inget sådant finns {
+                    2.2.1 kontrollera om något finns som är tidigare använt
+                    2.2.2 VÄLJ receptet och gör om enligt 2.1 för den dag vilken vi snodde
+                }
 
-            enumerateCriterias(menuCriteria);
-            assignMatchingRecipes(menuCriteria, allRecipes);
-            sortByFrequence(menuCriteria);
-
-            var selectedRecipes = [];
-            var criteriaPos = 0;
-
-            while (criteriaPos < menuCriteria.length) {
-                assignRecipesForCriteria(numberOfMeals, menuCriteria, criteriaPos);
             }
 
-            // 1) Börja med det mest sällsynta kriteriet
-            // 1.b) Ta därefter det näst mest sällsynta kriteriet
-            // 2.a) Slumpa fram recept bland dem som matchar (även tidigare matchade, alltså bland mer sällsynta kriteria)
-            // 2.b) Om det inte går att slumpa fram recept, gå tillbaka och gör om slumpningen för ett mer sällsynt kriteria, MEN med detta kriteria som ytterligare villkor. Gör ör det stegvis tills det funkar.
 
-            validateIncludingTags();
-            validateExcludingTags();
-            
+            enumerateCriteria(numberOfMeals, cond.menuCriteriaPerRecipe);
+            var allRecipes = this.getAllRecipes(Recipe.allRecipes(), minNoOfStars);
+
+            if (cond.tagsInAllRecipes && cond.tagsInAllRecipes.length > 0) {
+               allRecipes = this.getMatchingRecipes(allRecipes, cond.tagsInAllRecipes);
+            }
+
+            assignMatchingRecipes(cond.menuCriteriaPerRecipe, allRecipes);
+
+
+            for (var i = 0;cond.numberOfMeals; i++) {
+                var matchingRecipesExists = (cond.menuCriteriaPerRecipe[i].matchingRecipes.length > 0);
+
+                var selectedRecipe = this.getRandomRecipe(cond.menuCriteriaPerRecipe, i);
+                if (!selectedRecipe && matchingRecipesExists) {
+                    for (var j = i; i >= 0; j--) {
+                        if (this.containsRecipe(cond.menuCriteriaPerRecipe[j].selectedRecipe, 
+                                cond.menuCriteriaPerRecipe[i].matchingRecipes) {
+
+
+                        }
+                    };
+                    //Steal back recipe
+                }
+                
+            };
+
+           */ 
         }
     }    
 });

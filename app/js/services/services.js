@@ -25,22 +25,35 @@ recsamApp.factory('MultiTagUtil', function(){
         tags:[],
         tagitInput:[],
         setTags: function(tagitInputField, thiz) {
+            
+
             for(var tagitPos in thiz.tagitInput) {
                 if (thiz.tagitInput[tagitPos] == tagitInputField) {
+                    console.log("assigning: " + thiz.tagitInput[tagitPos].tagit("assignedTags") + " (" +tagitPos+ ")");
                     thiz.tags[tagitPos] = thiz.tagitInput[tagitPos].tagit("assignedTags");
                 }
             }
         },
         getTags: function(tagitId) {
             for(var tagitPos in this.tagitInput) {
-                if (this.tagitInput[tagitPos].attr('id') == tagitId) {
+                if (this.tagitInput[tagitPos] && this.tagitInput[tagitPos].attr('id') == tagitId) {
+                    console.log("get tags:" + this.tags[tagitPos] + " (" +tagitPos+ ")");
                     return this.tags[tagitPos];
                 }
             }
         },
         setup: function(tagitId, assignedTags, allTags, isReadonly) {
             var tagitInput = $('#'+tagitId);
+            // Make sure that there are no other tagit-boxes with the same id, bacause then we'are screwed
+            for(var tagitPos in this.tagitInput) {
+                if (this.tagitInput[tagitPos] && this.tagitInput[tagitPos].attr('id') == tagitId) {
+                    // DESTROY
+                    this.tagitInput[tagitPos] = null;
+                }
+            }
+
             this.tagitInput.push(tagitInput);
+            console.log("setup (" + this.tagitInput.length + ")");
             tagitInput.val(assignedTags);
 
             var me = this;
@@ -49,17 +62,18 @@ recsamApp.factory('MultiTagUtil', function(){
                 availableTags: allTags,
                 removeConfirmation: true,
                 onTagAdded: function(event, tag) {
+                    console.log("added:" + tag.text());
                     me.setTags(tagitInput, me)
-
+                    
                 },
-                onTagRemoved: function(event, tag) {
+                afterTagRemoved: function(event, tag) {
+                    console.log("removed:");
                     me.setTags(tagitInput, me)
-                },
+                    
+                }/*,
                 beforeTagAdded: function(event, ui) {
-                    // do something special
-                    console.log(ui.tag);
-                    console.log(ui.event);
-                }
+                    
+                }*/
             });
         }
     }

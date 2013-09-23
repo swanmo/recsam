@@ -2,7 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
-var recsamApp = angular.module('recsamApp', ['myApp.filters', 'myApp.services', 'myApp.directives']).
+var recsamApp = angular.module('recsamApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngSanitize']).
   config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/new-recipe', {
 		templateUrl: 'partials/new-recipe.htm',

@@ -38,27 +38,34 @@ Menu
 describe('Menu service', function() {
 	var $rootScope, recipeMockService, menuUtilMockService, menuService;
 
-	var criteria1 = [{
-		numberOfRecipes:'alla',
+
+	var criteria0 = [{
 		tags:['vardag'],
 		id:null,
 		selectable:null
 	},
 	{
-		numberOfRecipes:'1',
+		id:null,
+		selectable:null
+	}];
+
+	var criteria1 = [{
+		tags:['vardag'],
+		id:null,
+		selectable:null
+	},
+	{
 		tags:['fisk'],
 		id:null,
 		selectable:null
 	}];
 
 	var criteria2 = [{
-		numberOfRecipes:'alla',
 		tags:['vardag', 'test'],
 		id:null,
 		selectable:null
 	},
 	{
-		numberOfRecipes:'1',
 		tags:['fisk', 'fest'],
 		id:null,
 		selectable:null
@@ -156,18 +163,28 @@ describe('Menu service', function() {
 		expect(results.length).toBe(2);
 	});
 
-	it('enumerateCriteria should assign a number to each criterion', function() {
+	it('enumerateCriteria should create property matchingRecipes', function() {
 		menuService.enumerateCriteria(criteria1);
 		expect(criteria1.length).toBe(2);
 		
-		expect(criteria1[0].no).toBe(0);
 		expect(criteria1[0].matchingRecipes).not.toBeUndefined()
 		expect(criteria1[0].matchingRecipes.length).toBe(0);
 
-		expect(criteria1[1].no).toBe(1);
 		expect(criteria1[1].matchingRecipes).not.toBeUndefined()
 		expect(criteria1[1].matchingRecipes.length).toBe(0);
 	});
+
+	it('enumerateCriteria should create property tags if it doesnt exist', function() {
+		menuService.enumerateCriteria(criteria0);
+		expect(criteria0.length).toBe(2);
+		
+		expect(criteria0[0].tags).not.toBeUndefined();
+		expect(criteria0[0].tags.length).toBe(1);
+
+		expect(criteria0[1].tags).not.toBeUndefined();
+		expect(criteria0[1].tags.length).toBe(0);
+	});
+
 
 	it('assignMatchingRecipes should find matching recipes for every criterion', function() {
 		menuService.assignMatchingRecipes(criteria1, recipeMockService.allRecipes());
@@ -207,7 +224,7 @@ var criteria3 = [{ // 4
 		matchingRecipes:[{name:'r1', id:'i1'}]
 	}];
 */
-	it('sortByFrequence should sort criteria, rarest first', function() {
+	/*it('sortByFrequence should sort criteria, rarest first', function() {
 		menuService.numberOfMealsInTotal = 44;
 
 		menuService.sortByFrequence(criteria3);
@@ -218,7 +235,7 @@ var criteria3 = [{ // 4
 
 		expect(criteria3[2].numberOfRecipes).toBe('1');
 
-	});
+	});*/
 
 	it('containsRecipe should return true if array contains recipe, matched by id', function() {
 		expect(menuService.containsRecipe(recipeMockService.allRecipes(), {id:'rec_20120222_1735_000'})).toBe(true);
@@ -250,9 +267,9 @@ var criteria3 = [{ // 4
 		expect(results[2].id).toBe('i1');
 	});
 	
-	it('totalNumberOfSelectedRecipes should sum up all lengths of the selectedRecipes-arrays', function() {
+	/*it('totalNumberOfSelectedRecipes should sum up all lengths of the selectedRecipes-arrays', function() {
 		expect(menuService.totalNumberOfSelectedRecipes(criteria4)).toBe(5);
-	});
+	});*/
 
 	
 });

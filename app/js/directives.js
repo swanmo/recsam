@@ -149,7 +149,16 @@ directive('tagmanager', function($rootScope) {
 				template: '<div class="starsSel" title="{{rating}} stjärnor"><div id="starSel1" class="selected"></div><div id="starSel2" class="selected"></div><div id="starSel3" class="selected"></div><div id="starSel4" class="selected"></div><div id="starSel5" class="selected"></div></div>',
 				transclude: true
 		};
-	}).
+	})./*
+	directive('animate', ['$value', '$defer', function(value, $defer) {
+		return function(scope, element, attrs) {
+			$defer(function() {
+				console.log("sdfdsdfs");
+				element.addClass(value);
+			});
+		}
+	}]).*/
+
 	directive('appVersion', ['version', function(version) {
 		return function(scope, elm, attrs) {
 			elm.text(version);
