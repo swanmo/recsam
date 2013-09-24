@@ -3,16 +3,18 @@
   <!-- Begin page content -->
   <div class="container">
 
-    <div class="hero-unit">
+    <div class="jumbotron">
       <h1>Välkommen</h1>
       <p>
         <span ng-hide="query.length">Du har {{numberOfRecipes}} recept</span>
         <span ng-show="query.length">Din sökning gav {{(recipes|filter:query).length}} resultat</span>
       </p>
-      <div class="input-append">
-        <input class="span2" id="appendedInputButton" type="text" id="queryField" ng-model="query">
+      <div class="input-group">
 
-        <button class="btn" type="button">Sök</button>
+          <input class="form-control input-lg" id="appendedInputButton" type="text" id="queryField" ng-model="query">
+        <span class="input-group-btn">
+          <button class="btn btn-lg" type="button">Sök</button>
+
       </div>
 
       <p>
@@ -34,12 +36,12 @@
         <p style="cursor:pointer" onclick="window.location='#/recipes/{{rec.id}}'">{{rec.cookingMinutes}} min tillagningstid<span style="color:#999">, {{rec.ingredientsList.length}} ingredienser</span></p>
 
 
-        <div class="row-fluid">
-          <div class="row-fluid">
-            <div class="span10">
+        <div class="row">
+          <div class="row">
+            <div class="col-md-10">
               <span star-as-html rating="rec.rating"></span>
             </div>
-            <div class="span2" style="text-align:right"><img src="img/glyphicons_202_shopping_cart.png" style="display:inline-block"></div>
+            <div class="col-md-2" style="text-align:right"><img src="img/glyphicons_202_shopping_cart.png" style="display:inline-block"></div>
           </div>
         </div>
       </div>
