@@ -30,19 +30,17 @@
 
     <h1>recept-lista</h1>
     <div class="recipes">
-      <div ng-repeat="rec in recipes | filter:query" class="thumbnail recipe-list-container">
+      <div ng-repeat="rec in recipes | filter:query" class="well recipe-list-container">
         <a href="#/recipes/{{rec.id}}/{{rec.alias}}">{{rec.name}}</a>
 
         <p style="cursor:pointer" onclick="window.location='#/recipes/{{rec.id}}'">{{rec.cookingMinutes}} min tillagningstid<span style="color:#999">, {{rec.ingredientsList.length}} ingredienser</span></p>
 
 
         <div class="row">
-          <div class="row">
             <div class="col-md-10">
               <span star-as-html rating="rec.rating"></span>
             </div>
             <div class="col-md-2" style="text-align:right"><img src="img/glyphicons_202_shopping_cart.png" style="display:inline-block"></div>
-          </div>
         </div>
       </div>
   </div>

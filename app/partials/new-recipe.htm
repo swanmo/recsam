@@ -1,59 +1,88 @@
 <div class="container">
     <div ng-include src="template.first"></div>
     <div ng-include  src="'partials/template-message.htm'"></div>
+    
+    <div class="btn-group">
+	  <button type="button" class="btn btn-default">Tillbaka till recept</button>
+	  <button type="button" class="btn btn-default">Ändra</button>
+	</div>
 
-    <form id="recipeFrm">
-		<fieldset>
-		  <legend style="width:100%"><div style="width:100%">Nytt recept 
+    <form id="recipeFrm" role="form">
+
+		  <div style="width:100%"><div style="width:100%">
 
 		  	<button style="float:right;margin-left:.3em" type="submit" class="btn btn-primary" ng-click="save(recipe)">Spara</button>
 
-		    <a style="float:right;margin-left:.3em" href="#createFromUrlDlg" role="button" class="btn" data-toggle="modal">Skapa från webbsida</a>
-		    </div></legend>
-		  
-		  <div class="row-fluid">
-		    <div class="span8">
-		      <label>Namn på recept</label>
-		      <input type="text" name="name" class="input-xxlarge" ng-model="recipe.name" required>
-		      <span class="error" ng-show="recipeFrm.name.$error.required">
-	          Required!</span>
+		    <a style="float:right;margin-left:.3em" href="#createFromUrlDlg" role="button" class="btn btn-default" data-toggle="modal">Skapa från webbsida</a>
 		    </div>
-		    <div class="span4">
-		    	<label>Betygsätt</label>
-				<stargazer rating="recipe.rating"></stargazer>
+		</div>
+
+		    <div class="row">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Namn på recept</label>
+						<input type="text" name="name" class="form-control" ng-model="recipe.name" required>
+						<span class="error" ng-show="recipeFrm.name.$error.required">Required!</span>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<label>Betygsätt</label>
+					<stargazer rating="recipe.rating"></stargazer>
+				</div>
 		    </div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<label>Ingredienser</label>
+					<textarea rows="20"  ng-model="recipe.ingredients" class="form-control"></textarea>
+				</div>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="form-group" style="width:200px">
+							<label for="appendedInput-1">Portioner</label>
+							<div class="input-group">
+								<input class="form-control" id="appendedInput-1" type="text"
+									placeholder="Antal" ng-model="recipe.servingNo" size="36">
+								<span class="input-group-addon">portioner</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group" style="width:200px">
+							<label for="appendedInput-2">Tillagningstid</label>
+							<div class="input-group">
+								<input class="form-control" id="appendedInput-1" type="text"
+									placeholder="Antal" ng-model="recipe.cookingMinutes" size="36">
+								<span class="input-group-addon">minuter</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label for="recipeSource">Källa</label>
+		      				<input id="recipeSource" type="text" class="form-control" ng-model="recipe.pageUrl">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<label>Beskrivning</label>
+		      				<textarea rows="11" style="width:100%"  ng-model="recipe.description" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12">
+							<input type="text" name="recipeTags" id="recipeTags" placeholder="Tags" class="tagManager"/>
+						</div>
+					</div>
+				</div>
+			</div>
 		  </div>
-		  <div class="row-fluid">
-		    
-		    <div class="span4">
-		      <label>Ingredienser</label>
-		      <textarea rows="20"  ng-model="recipe.ingredients"></textarea>
-		    </div>
 
-
-		    <div class="span8">
-
-		      <label for="appendedInput-1">Portioner</label>
-		      <div class="input-append">
-		        <input class="span2" id="appendedInput-1" type="text" placeholder="Antal" ng-model="recipe.servingNo" size="36">
-		        <span class="add-on">portioner</span>
-		      </div>
-
-		      <label for="appendedInput-2">Tillagningstid</label>
-		      <div class="input-append">
-		        <input class="span2" id="appendedInput-2" type="text" placeholder="Antal" ng-model="recipe.cookingMinutes" size="36">
-		        <span class="add-on">minuter</span>
-		      </div>
-		      
-		      <label for="recipeSource">Källa</label>
-		      <input id="recipeSource" type="text" class="input-xlarge" ng-model="recipe.pageUrl">
-
-		      <label>Beskrivning</label>
-		      <textarea rows="11" style="width:100%"  ng-model="recipe.description"></textarea>
-		      <input type="text" name="recipeTags" id="recipeTags" placeholder="Tags" class="tagManager"/>
-		    </div>
-		  </div>
-		</fieldset>
 	</form>
 </div>
 
