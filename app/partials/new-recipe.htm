@@ -1,19 +1,24 @@
 <div class="container">
     <div ng-include src="template.first"></div>
     <div ng-include  src="'partials/template-message.htm'"></div>
-    
-    <div class="btn-group">
-	  <button type="button" class="btn btn-default">Tillbaka till recept</button>
-	  <button type="button" class="btn btn-default">Ändra</button>
-	</div>
 
     <form id="recipeFrm" role="form">
 
-		  <div style="width:100%"><div style="width:100%">
+		<div style="width:100%">
+			<div style="width:100%; text-align:right">
+				<div class="btn-group">
+					<button type="button" class="btn btn-primary" ng-click="save(recipe)">
+						<span class="glyphicon glyphicon-save"></span> Spara
+					</button>
+					<a href="#createFromUrlDlg" class="btn btn-default" role="button"
+						data-toggle="modal"						>
+						<span class="glyphicon glyphicon-globe"></span> Skapa från webbsida!
+					</a>
 
-		  	<button style="float:right;margin-left:.3em" type="submit" class="btn btn-primary" ng-click="save(recipe)">Spara</button>
-
-		    <a style="float:right;margin-left:.3em" href="#createFromUrlDlg" role="button" class="btn btn-default" data-toggle="modal">Skapa från webbsida</a>
+					<button class="btn btn-default">
+						<span class="glyphicon glyphicon-trash"></span> Ta bort
+					</a>
+				</div>
 		    </div>
 		</div>
 

@@ -8,40 +8,56 @@
 			</div>
 			<div class="col-md-4" style="padding-top:1em">
 				<div class="btn-group">
+					<button type="button" class="btn btn-default" onclick="window.location.href='#/edit-recipe/{{recipe.id}}'">
+						<span class="glyphicon glyphicon-edit"></span> Ändra
+					</button>
 					<button type="button" class="btn btn-default">
 						<span class="glyphicon glyphicon-shopping-cart"></span>	Lägg till shopping-lista
-					</button>
-						<button type="button" class="btn btn-default" href="#/edit-recipe/{{recipe.id}}">
-							<span class="glyphicon glyphicon-pencil"> Ändra
 					</button>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-4 col-sm-5 col-xs-12">
 				<p><strong>Ingredienser</strong></p>
-				<div id="ingredientsDiv" class="well" style="max-width: 400px; margin: 0 auto .2em" ng-bind-html-unsafe="recipe.ingredients">
+				<div id="ingredientsDiv" class="well" style="margin: 0 auto .2em" ng-bind-html-unsafe="recipe.ingredients">
 					<!-- <a id="ingredientsShoppingIcon" style="float:right;position:relative;top:-12px;left:11px" href="#" onclick="$('#ingredientsDiv').attr('contentEditable',true).css('background-color','white');"><i class="icon-shopping-cart"></i></a> -->
 					
 				</div>
 			</div>
 
-			<div class="col-md-8">
-				<p><strong>Portioner:</strong> {{recipe.servingNo}}</p>
-				<p><strong>Tillagningstid:</strong> {{recipe.cookingMinutes}}</p>
-				<p><strong>Källa:</strong> <span page-url-as-html page-url="recipe.pageUrl"></span>
-				<p><strong>Beskrivning</strong></p>
-				<div id="ingredientsDiv" class="well" style=" max-width: 720px; margin: 0 auto .2em" ng-bind-html-unsafe="recipe.description"></div>
-				<p><strong style="float:left;padding-top:6px">Taggar:&nbsp;&nbsp;</strong>
-					<input type="text" name="recipeTags" id="recipeTags"/>
-				</p>
+			<div class="col-md-8 col-sm-7 col-xs-12">
+				<div class="form-group">
+					<label>Portioner: </label>
+					{{recipe.servingNo}}
+				</label>
+				<div class="form-group">
+					<label class="control-label">Tillagningstid: </label>
+					{{recipe.cookingMinutes}}
+				</label>
+					
+				<div class="form-group">
+					<label>Beskrivning</label>
+					<div id="ingredientsDiv" class="well" style=" max-width: 720px; margin: 0 auto .2em" ng-bind-html-unsafe="recipe.description"></div>
+				</div>
+				
+				<div class="row">
+					
+					<div class="col-md-12">
+						<label><span class="glyphicon glyphicon-tags"></span> Taggar</label>
+						
+
+						<input type="text" name="recipeTags" id="recipeTags"/>
+					</div>
+				</div>
 			</div>
 
 		</div>
 
 		<div id="push"></div>
 	</div>
-
+<span style="color:#aaa"><span class="visible-xs">XS</span><span class="visible-sm">SM</span><span class="visible-md">MD</span><span class="visible-lg">LG</span>
+				</span>
 
 
 <script type="text/javascript">
